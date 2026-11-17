@@ -1,0 +1,96 @@
+/* mino rofi theme */
+* {
+  bg: #0f1419ee;
+  bg-alt: #161b22ff;
+  fg: #e5e9f0ff;
+  fg-dim: #8b949eff;
+  accent: #88c0d0ff;
+  border: #2e3440ff;
+  urgent: #ff7b72ff;
+  font: "JetBrains Mono Nerd Font 12";
+}
+
+window {
+  width: 420px;
+  border: 1px;
+  border-color: @border;
+  border-radius: 0;
+  background-color: @bg;
+  padding: 12px;
+  location: center;
+  anchor: center;
+}
+
+mainbox {
+  background-color: transparent;
+  spacing: 10px;
+}
+
+inputbar {
+  background-color: @bg-alt;
+  border: 1px;
+  border-color: @border;
+  border-radius: 0;
+  padding: 10px 14px;
+  spacing: 8px;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  background-color: transparent;
+  text-color: @accent;
+  font: "JetBrains Mono Nerd Font Bold 12";
+}
+
+entry {
+  background-color: transparent;
+  text-color: @fg;
+  placeholder: "search…";
+  placeholder-color: @fg-dim;
+  cursor: text;
+}
+
+message {
+  background-color: transparent;
+  text-color: @fg-dim;
+  padding: 4px;
+}
+
+listview {
+  background-color: transparent;
+  lines: 10;
+  columns: 1;
+  spacing: 4px;
+  fixed-height: true;
+  scrollbar: false;
+}
+
+element {
+  background-color: transparent;
+  padding: 8px 12px;
+  border-radius: 0;
+  spacing: 10px;
+}
+
+element normal normal {
+  text-color: @fg;
+  background-color: transparent;
+}
+
+element selected normal {
+  background-color: alpha(#88c0d0, 0.20);
+  text-color: @accent;
+  border: 1px;
+  border-color: @accent;
+}
+
+element-icon {
+  background-color: transparent;
+  size: 20px;
+}
+
+element-text {
+  background-color: transparent;
+  text-color: inherit;
+  vertical-align: 0.5;
+}

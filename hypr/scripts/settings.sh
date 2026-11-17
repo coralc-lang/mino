@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# settings.sh — Super+Shift+, settings menu (wofi)
+# settings.sh — Super+Shift+, or Super+I  (rofi, single-click)
 set -euo pipefail
 
 HYPR="$HOME/.config/hypr"
@@ -19,76 +19,77 @@ toggle_bool() {
   printf '%s' "$next"
 }
 
-status_mark() { [[ "$1" == "1" ]] && echo "●" || echo "○"; }
+onoff() { [[ "$1" == "1" ]] && echo ON || echo OFF; }
+
+restart_waybar() {
+  if pgrep -x waybar >/dev/null 2>&1; then
+    systemctl --user try-restart waybar.service 2>/dev/null || {
+      pkill -x waybar 2>/dev/null || true
+      sleep 0.15
+      systemctl --user start waybar.service 2>/dev/null || true
+    }
+  fi
+}
+
+regen_waybar() {
+  [[ -x "$SCRIPTS/waybar-config.sh" ]] && "$SCRIPTS/waybar-config.sh" || true
+}
+
+apply_opacity() {
+  # decoration.lua reads state on reload
+  hyprctl reload >/dev/null 2>&1 || true
+}
 
 anim="$(read_state animations 1)"
 idle="$(read_state idle 1)"
-ws="$(read_state show-workspaces 0)"
-expanded="$(read_state waybar-expanded 1)"
-cursor="$(read_state cursor-size 24)"
+trans="$(read_state transparency 1)"
+expanded="$(read_state waybar-expanded 0)"
+cursor="$(read_state cursor-size 16)"
 
-# Build menu
-menu="$(cat <<EOF
-Toggle animations — $(status_mark "$anim")
-Toggle idle / keep-screen-on — $(status_mark "$idle")
-Show workspaces in panel — $(status_mark "$ws")
-Waybar expanded — $(status_mark "$expanded")
-Cursor size: ${cursor}px
-Cycle theme
-Reload Hyprland
-Lock screen
-EOF
-)"
-
-choice="$(printf '%s\n' "$menu" | wofi --dmenu --prompt "mino settings" \
-  --width 360 --height 280 \
-  -s "file://$HOME/.config/wlogout/style.css" 2>/dev/null \
-  || printf '%s\n' "$menu" | wofi --dmenu --prompt "mino settings" --width 360 --height 280)"
+# rofi dmenu — single click selects
+choice="$(printf '%s\n' \
+  "Animations: $(onoff "$anim")" \
+  "Idle/lock: $(onoff "$idle")" \
+  "Window transparency: $(onoff "$trans")" \
+  "Sidebar expanded: $(onoff "$expanded")" \
+  "Cursor size: ${cursor}px" \
+  "Cycle theme" \
+  "Wallpaper picker" \
+  "Reload config" \
+  "Lock screen" \
+  | rofi -dmenu -i -p "mino settings" -theme mino)"
 
 [[ -z "${choice:-}" ]] && exit 0
 
 case "$choice" in
-  Toggle\ animations*)
+  Animations:*)
     new="$(toggle_bool animations 1)"
-    hyprctl keyword animations:enabled "$([[ $new == 1 ]] && echo true || echo false)" >/dev/null 2>&1 || true
-    notify-send "mino" "Animations: $([[ $new == 1 ]] && echo on || echo off)"
+    hyprctl reload >/dev/null 2>&1 || true
+    notify-send -t 1500 "mino" "Animations $(onoff "$new")"
     ;;
-  Toggle\ idle*)
+  Idle/lock:*)
     new="$(toggle_bool idle 1)"
     if [[ "$new" == "1" ]]; then
       systemctl --user start hypridle.service 2>/dev/null || true
     else
       systemctl --user stop hypridle.service 2>/dev/null || true
-      # wake screen if it was dimmed/off
       hyprctl dispatch dpms on >/dev/null 2>&1 || true
       brightnessctl -r >/dev/null 2>&1 || true
     fi
-    notify-send "mino" "Idle/lock: $([[ $new == 1 ]] && echo on || echo off)"
+    notify-send -t 1500 "mino" "Idle/lock $(onoff "$new")"
     ;;
-  Show\ workspaces*)
-    new="$(toggle_bool show-workspaces 0)"
-    write_state show-workspaces "$new"
-    # regenerate waybar config module list
-    if [[ -x "$SCRIPTS/waybar-config.sh" ]]; then
-      "$SCRIPTS/waybar-config.sh"
-    fi
-    if pgrep -x waybar >/dev/null 2>&1; then
-      systemctl --user try-restart waybar.service 2>/dev/null || { pkill -x waybar; sleep 0.2; systemctl --user start waybar.service 2>/dev/null || true; }
-    fi
-    notify-send "mino" "Workspaces: $([[ $new == 1 ]] && echo shown || echo hidden)"
+  Window\ transparency:*)
+    new="$(toggle_bool transparency 1)"
+    apply_opacity
+    notify-send -t 1500 "mino" "Transparency $(onoff "$new")"
     ;;
-  Waybar\ expanded*)
-    new="$(toggle_bool waybar-expanded 1)"
-    if [[ -x "$SCRIPTS/waybar-config.sh" ]]; then
-      "$SCRIPTS/waybar-config.sh"
-    fi
-    if pgrep -x waybar >/dev/null 2>&1; then
-      systemctl --user try-restart waybar.service 2>/dev/null || true
-    fi
-    notify-send "mino" "Waybar: $([[ $new == 1 ]] && echo expanded || echo compact)"
+  Sidebar\ expanded:*)
+    new="$(toggle_bool waybar-expanded 0)"
+    regen_waybar
+    restart_waybar
+    notify-send -t 1500 "mino" "Sidebar $(onoff "$new")"
     ;;
   Cursor\ size:*)
-    # cycle 16 → 24 → 32 → 16
     case "$cursor" in
       16) next=24 ;;
       24) next=32 ;;
@@ -96,17 +97,19 @@ case "$choice" in
     esac
     write_state cursor-size "$next"
     hyprctl setcursor default "$next" >/dev/null 2>&1 || true
-    # persist for next session via env file used by install
-    sed -i "s/^XCURSOR_SIZE=.*/XCURSOR_SIZE=${next}/" "$HOME/.config/gtk-3.0/settings.ini" 2>/dev/null || true
+    sed -i "s/^gtk-cursor-theme-size=.*/gtk-cursor-theme-size=${next}/" "$HOME/.config/gtk-3.0/settings.ini" 2>/dev/null || true
     gsettings set org.gnome.desktop.interface cursor-size "$next" 2>/dev/null || true
-    notify-send "mino" "Cursor size: ${next}px"
+    notify-send -t 1500 "mino" "Cursor ${next}px"
     ;;
   Cycle\ theme)
     exec "$SCRIPTS/theme-cycle.sh"
     ;;
-  Reload\ Hyprland)
+  Wallpaper\ picker)
+    exec "$SCRIPTS/wallpaper-picker.sh"
+    ;;
+  Reload\ config)
     hyprctl reload >/dev/null 2>&1 || true
-    notify-send "mino" "Config reloaded"
+    notify-send -t 1500 "mino" "Config reloaded"
     ;;
   Lock\ screen)
     exec hyprlock

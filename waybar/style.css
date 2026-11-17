@@ -1,34 +1,33 @@
-/* mino waybar side panel — colors from generated/waybar.css */
+/* mino waybar — thin side panel */
 @import url("file:///home/cerie/.config/hypr/generated/waybar.css");
 
 * {
   border: none;
   border-radius: 0;
   font-family: "JetBrains Mono Nerd Font", "JetBrainsMono Nerd Font", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   min-height: 0;
 }
 
 window#waybar {
-  background-color: alpha(@bg, 0.92);
+  background-color: alpha(@bg, 0.94);
   color: @fg;
   border: 1px solid @border-dim;
-  transition-property: background-color;
-  transition-duration: 0.3s;
 }
 
 #custom-launcher,
-#workspaces,
+#custom-workspace,
 #clock,
-#custom-spacer,
+#cpu,
+#memory,
 #pulseaudio,
 #network,
 #battery,
 #custom-notifications,
 #custom-settings,
 #custom-session {
-  padding: 10px 6px;
-  margin: 2px 4px;
+  padding: 7px 2px;
+  margin: 1px 2px;
   background-color: transparent;
   color: @on-surface;
   border-radius: 0;
@@ -36,49 +35,25 @@ window#waybar {
 
 #custom-launcher {
   color: @accent;
-  font-size: 18px;
-  padding-top: 12px;
+  font-size: 16px;
+  padding-top: 10px;
 }
 
-#custom-launcher:hover {
-  background-color: alpha(@accent, 0.15);
-}
-
-/* workspaces */
-#workspaces {
-  padding: 6px 4px;
-}
-
-#workspaces button {
-  padding: 4px 6px;
-  margin: 1px 2px;
-  color: @on-surface-variant;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  font-size: 11px;
-}
-
-#workspaces button.active {
+/* current workspace number only */
+#custom-workspace {
   color: @accent;
+  font-weight: 700;
+  font-size: 14px;
   background-color: alpha(@accent, 0.14);
+  padding: 6px 2px;
+  margin: 2px 4px;
 }
 
-#workspaces button.urgent {
-  color: @error;
-  background-color: alpha(@error, 0.16);
-}
-
-#workspaces button:hover {
-  background-color: alpha(@accent, 0.12);
-}
-
-/* clock */
 #clock {
   color: @fg;
   font-weight: 600;
-  font-size: 13px;
-  padding: 12px 6px;
+  font-size: 11px;
+  padding: 8px 2px;
 }
 
 #clock:hover {
@@ -86,20 +61,17 @@ window#waybar {
   color: @accent;
 }
 
-#custom-spacer {
-  background: linear-gradient(to bottom, transparent, @border-dim, transparent);
-  min-height: 24px;
-  margin: 6px 12px;
-  padding: 0;
-}
-
+#cpu,
+#memory,
 #pulseaudio,
 #network,
 #battery {
   color: @on-surface-variant;
-  font-size: 12px;
+  font-size: 11px;
 }
 
+#cpu:hover,
+#memory:hover,
 #pulseaudio:hover,
 #network:hover,
 #battery:hover {
@@ -107,27 +79,14 @@ window#waybar {
   color: @accent;
 }
 
-#pulseaudio.muted {
-  color: @error;
+#cpu #memory {
+  color: @on-surface-variant;
 }
 
-#network.disconnected {
-  color: @warning;
-}
-
-#network.wifi {
-  color: @on-surface;
-}
-
-#battery.charging,
-#battery.plugged {
-  color: @success;
-}
-
-#battery.warning:not(.charging) {
-  color: @warning;
-}
-
+#pulseaudio.muted { color: @error; }
+#network.disconnected { color: @warning; }
+#battery.charging, #battery.plugged { color: @success; }
+#battery.warning:not(.charging) { color: @warning; }
 #battery.critical:not(.charging) {
   color: @error;
   animation: blink 1s linear infinite;
@@ -137,7 +96,6 @@ window#waybar {
 #custom-settings {
   color: @on-surface-variant;
 }
-
 #custom-notifications:hover,
 #custom-settings:hover {
   background-color: alpha(@accent, 0.12);
@@ -146,9 +104,8 @@ window#waybar {
 
 #custom-session {
   color: @error;
-  padding-bottom: 12px;
+  padding-bottom: 10px;
 }
-
 #custom-session:hover {
   background-color: alpha(@error, 0.15);
 }
@@ -159,13 +116,6 @@ tooltip {
   border: 1px solid @border-dim;
   border-radius: 0;
 }
+tooltip label { color: @fg; }
 
-tooltip label {
-  color: @fg;
-}
-
-@keyframes blink {
-  to {
-    color: @fg;
-  }
-}
+@keyframes blink { to { color: @fg; } }

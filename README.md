@@ -21,10 +21,10 @@ Cycle: **Super+Shift+T**
 |-----|--------|
 | Super+Return | kitty |
 | Super+Q | close window |
-| Super+C | zed |
+| Super+C | zeditor |
 | Super+E | nautilus (thunar once installed) |
 | Super+B | firefox |
-| Super+R | hyprlauncher |
+| Super+R | rofi app launcher |
 | Super+V | cliphist clipboard |
 | Super+Shift+V | emoji (rofimoji) |
 | Super+N | toggle side waybar |
@@ -73,3 +73,18 @@ sudo cp -a sddm/mino /usr/share/sddm/themes/
 - waybar is **disabled** by default; **Super+N** toggles it.
 - mako / hyprpaper / hypridle run as systemd user units.
 - Kitty needs `sudo pacman -Syu` (openssl 4 / libcrypto.so.4).
+
+## Extra binds
+
+| Key | Action |
+|---|---|
+| Super+Shift+W | Wallpaper picker |
+| Super+Alt+Shift+R | Reload Hyprland config |
+| Super+I | Settings |
+| Super+Shift+, | Settings |
+
+
+## Settings toggles
+
+- Animations, idle lock, **window transparency**, sidebar expand, cursor size
+- Access: `Super+Shift+,` or `Super+I` (or gear in waybar)

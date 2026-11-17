@@ -6,7 +6,7 @@ hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 
 hl.env("XCURSOR_THEME", "default")
 
-local cursor_size = "24"
+local cursor_size = "16"
 do
   local f = io.open(os.getenv("HOME") .. "/.config/hypr/state/cursor-size", "r")
   if f then
