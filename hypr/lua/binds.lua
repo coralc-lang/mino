@@ -20,6 +20,7 @@ hl.bind("SUPER + E", hl.dsp.exec_cmd("command -v thunar >/dev/null && thunar || 
 hl.bind("SUPER + B", hl.dsp.exec_cmd(browser))
 hl.bind("SUPER + G", hl.dsp.exec_cmd("godot"))
 hl.bind("SUPER + R", hl.dsp.exec_cmd(menu))
+hl.bind("SUPER + A", hl.dsp.exec_cmd("/home/cerie/.config/hypr/scripts/mino-menu.sh"))
 hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd(terminal .. " -e btop"))
 hl.bind("SUPER + ALT + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind("SUPER + P", hl.dsp.exec_cmd("hyprpicker -a -n"))
@@ -66,6 +67,7 @@ hl.bind("SUPER + SHIFT + V", hl.dsp.exec_cmd("rofimoji -a copy"))
 hl.bind("SUPER + SHIFT + T", hl.dsp.exec_cmd(SCRIPTS .. "/theme-cycle.sh"))
 hl.bind("SUPER + N", hl.dsp.exec_cmd(SCRIPTS .. "/toggle-waybar.sh"))
 hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("/home/cerie/.config/hypr/scripts/brightness-slider.sh"))
 hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd(SCRIPTS .. "/wallpaper-picker.sh"))
 hl.bind("SUPER + SHIFT + comma", hl.dsp.exec_cmd(SCRIPTS .. "/settings.sh"))
 hl.bind("SUPER + I", hl.dsp.exec_cmd(SCRIPTS .. "/settings.sh"))
@@ -75,15 +77,9 @@ hl.bind("SUPER + SHIFT + Escape", hl.dsp.exec_cmd("hyprctl dispatch exit"))
 hl.bind("CTRL + ALT + Delete", hl.dsp.exec_cmd("loginctl lock-session"))
 
 -- Screenshots
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(
-  'grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Region copied"'
-))
-hl.bind("Print", hl.dsp.exec_cmd(
-  'grim - | wl-copy && notify-send "Screenshot" "Fullscreen copied"'
-))
-hl.bind("SUPER + Print", hl.dsp.exec_cmd(
-  'grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Region copied"'
-))
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("/home/cerie/.config/hypr/scripts/screenshot.sh region"))
+hl.bind("Print", hl.dsp.exec_cmd("/home/cerie/.config/hypr/scripts/screenshot.sh full"))
+hl.bind("SUPER + Print", hl.dsp.exec_cmd("/home/cerie/.config/hypr/scripts/screenshot.sh region"))
 
 -- Media / brightness (locked = works on lockscreen)
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })

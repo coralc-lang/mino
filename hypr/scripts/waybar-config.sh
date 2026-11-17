@@ -1,42 +1,30 @@
 #!/usr/bin/env bash
-# waybar-config.sh — regenerate waybar/config.jsonc from state flags
 set -euo pipefail
-
 STATE="$HOME/.config/hypr/state"
 OUT="$HOME/.config/waybar/config.jsonc"
 WS_HELPER="$HOME/.config/hypr/scripts/waybar-workspace.sh"
 SCRIPTS="$HOME/.config/hypr/scripts"
 mkdir -p "$(dirname "$OUT")" "$STATE"
-
 read_state() { [[ -f "$STATE/$1" ]] && cat "$STATE/$1" || echo "${2:-0}"; }
 expanded="$(read_state waybar-expanded 0)"
 
-# vertical clock: real newline so it stacks HH over MM (not literal \n)
 if [[ "$expanded" == "1" ]]; then
   width=64
-  clock_format='{:%H%n%M}'
-  net_wifi='󰤨 {essid}'
-  net_eth='󰈀 {ifname}'
-  net_disc='󰤮'
-  vol_fmt='{icon} {volume}%'
-  bat_fmt='{icon} {capacity}%'
-  cpu_fmt='󰻠 {usage}%'
-  mem_fmt='󰍛 {percentage}%'
+  net_wifi='󰤨 {essid}'; net_eth='󰈀 {ifname}'; net_disc='󰤮'
+  vol_fmt='{icon} {volume}%'; bat_fmt='{icon} {capacity}%'
+  cpu_fmt='󰻠 {usage}%'; mem_fmt='󰍛 {percentage}%'
+  br_fmt='󰃠 {percentage}%'
 else
   width=56
-  clock_format='{:%H%n%M}'
-  net_wifi='󰤨'
-  net_eth='󰈀'
-  net_disc='󰤮'
-  vol_fmt='{icon}'
-  bat_fmt='{icon}'
-  cpu_fmt='󰻠'
-  mem_fmt='󰍛'
+  net_wifi='󰤨'; net_eth='󰈀'; net_disc='󰤮'
+  vol_fmt='{icon}'; bat_fmt='{icon}'
+  cpu_fmt='󰻠'; mem_fmt='󰍛'
+  br_fmt='󰃠'
 fi
 
 WS_HELPER="$WS_HELPER" OUT="$OUT" WIDTH="$width" \
-CLOCK="$clock_format" NET_WIFI="$net_wifi" NET_ETH="$net_eth" NET_DISC="$net_disc" \
-VOL="$vol_fmt" BAT="$bat_fmt" CPU="$cpu_fmt" MEM="$mem_fmt" \
+NET_WIFI="$net_wifi" NET_ETH="$net_eth" NET_DISC="$net_disc" \
+VOL="$vol_fmt" BAT="$bat_fmt" CPU="$cpu_fmt" MEM="$mem_fmt" BR="$br_fmt" \
 SCRIPTS="$SCRIPTS" HOME_DIR="$HOME" \
 python3 - <<'PY'
 import json, os
@@ -45,20 +33,17 @@ ws = os.environ["WS_HELPER"]
 width = int(os.environ["WIDTH"])
 home = os.environ["HOME_DIR"]
 scripts = os.environ["SCRIPTS"]
-clock = os.environ["CLOCK"]  # contains real newlines
 
-# Distribute across full height of right-side bar:
-# left = top, center = mid, right = bottom
 cfg = {
   "layer": "top",
   "position": "right",
   "width": width,
   "height": "100%",
-  "margin": "4px 4px 4px 0",
-  "padding": "8px 3px",
-  "spacing": 4,
+  "margin": "6px 6px 6px 0",
+  "padding": "10px 4px",
+  "spacing": 6,
   "reload_style_on_change": True,
-  # TOP: identity + perf + time
+  # TOP
   "modules-left": [
     "custom/launcher",
     "custom/workspace",
@@ -66,13 +51,14 @@ cfg = {
     "cpu",
     "memory",
   ],
-  # MID: media / net / power
+  # MID
   "modules-center": [
     "pulseaudio",
+    "backlight",
     "network",
     "battery",
   ],
-  # BOTTOM: actions
+  # BOTTOM
   "modules-right": [
     "custom/notifications",
     "custom/settings",
@@ -81,26 +67,39 @@ cfg = {
   "custom/launcher": {
     "format": "\U000f08c3",
     "tooltip": True,
-    "tooltip-format": "mino",
-    "on-click": "",
-    "on-click-right": "",
+    "tooltip-format": "mino utilities",
+    "on-click": f"{scripts}/mino-menu.sh",
+    "on-click-right": "rofi -show drun -theme mino",
   },
   "custom/workspace": {
     "exec": ws,
     "interval": 1,
     "format": "{}",
     "tooltip": True,
-    "tooltip-format": "workspace",
+    "tooltip-format": "workspace · click next",
     "on-click": "hyprctl dispatch workspace e+1",
     "on-click-right": "hyprctl dispatch workspace e-1",
   },
   "clock": {
-    "format": clock,
+    # vertical HH / MM via chrono %n
+    "format": "{:%H%n%M}",
     "format-alt": "{:%Y-%m-%d %H:%M:%S}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    # hover shows calendar with today highlighted (waybar built-in)
+    "tooltip-format": "{:%A\n%B %d, %Y}\n\n{calendar}",
     "interval": 30,
     "on-click": "",
     "on-click-right": "",
+    "calendar": {
+      "mode": "month",
+      "mode-month": "month",
+      "weeks-pos": "right",
+      "format": {
+        "months": "<span color='#88c0d0'><b>{}</b></span>",
+        "days": "<span color='#e5e9f0'>{}</span>",
+        "weeks": "<span color='#8b949e'>W{}</span>",
+        "today": "<span color='#0f1419' background='#88c0d0'><b>{}</b></span>"
+      }
+    },
   },
   "cpu": {
     "format": os.environ["CPU"],
@@ -119,21 +118,32 @@ cfg = {
     "format-muted": "󰝟",
     "format-icons": {"default": ["󰕿", "󰖀", "󰕾"]},
     "scroll-step": 5,
-    "on-click": f"{scripts}/volume-menu.sh",
+    # click opens GTK slider (updates live via wpctl)
+    "on-click": f"{scripts}/volume-slider.sh",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
-    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
+    "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
     "tooltip": True,
-    "tooltip-format": "{volume}% — scroll to adjust",
+    "tooltip-format": "{volume}% · click for slider · scroll adjusts",
+  },
+  "backlight": {
+    "format": os.environ["BR"],
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "on-scroll-up": "brightnessctl set +5%",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "on-click": f"{scripts}/brightness-slider.sh",
+    "tooltip": True,
+    "tooltip-format": "Brightness {percent}% · min 1%",
   },
   "network": {
     "format-wifi": os.environ["NET_WIFI"],
     "format-ethernet": os.environ["NET_ETH"],
     "format-disconnected": os.environ["NET_DISC"],
-    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}\nclick to manage",
     "tooltip-format-ethernet": "{ifname}\n{ipaddr}/{cidr}",
-    "tooltip-format-disconnected": "disconnected",
-    "on-click": "nm-connection-editor || nmtui",
+    "tooltip-format-disconnected": "disconnected · click to connect",
+    "on-click": f"{scripts}/network-menu.sh",
+    "on-click-right": "nm-connection-editor || nmtui",
     "max-length": 20,
   },
   "battery": {
@@ -143,9 +153,7 @@ cfg = {
     "format-charging": "󰂄",
     "format-plugged": "󰚥",
     "format-full": "󰁹",
-    "format-icons": [
-      "󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"
-    ],
+    "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
     "tooltip-format": "{capacity}% — {timeTo}",
     "on-click": "",
   },

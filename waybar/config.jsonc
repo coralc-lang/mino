@@ -3,9 +3,9 @@
   "position": "right",
   "width": 56,
   "height": "100%",
-  "margin": "4px 4px 4px 0",
-  "padding": "8px 3px",
-  "spacing": 4,
+  "margin": "6px 6px 6px 0",
+  "padding": "10px 4px",
+  "spacing": 6,
   "reload_style_on_change": true,
   "modules-left": [
     "custom/launcher",
@@ -16,6 +16,7 @@
   ],
   "modules-center": [
     "pulseaudio",
+    "backlight",
     "network",
     "battery"
   ],
@@ -27,26 +28,37 @@
   "custom/launcher": {
     "format": "󰣃",
     "tooltip": true,
-    "tooltip-format": "mino",
-    "on-click": "",
-    "on-click-right": ""
+    "tooltip-format": "mino utilities",
+    "on-click": "/home/cerie/.config/hypr/scripts/mino-menu.sh",
+    "on-click-right": "rofi -show drun -theme mino"
   },
   "custom/workspace": {
     "exec": "/home/cerie/.config/hypr/scripts/waybar-workspace.sh",
     "interval": 1,
     "format": "{}",
     "tooltip": true,
-    "tooltip-format": "workspace",
+    "tooltip-format": "workspace · click next",
     "on-click": "hyprctl dispatch workspace e+1",
     "on-click-right": "hyprctl dispatch workspace e-1"
   },
   "clock": {
     "format": "{:%H%n%M}",
     "format-alt": "{:%Y-%m-%d %H:%M:%S}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "tooltip-format": "{:%A\n%B %d, %Y}\n\n{calendar}",
     "interval": 30,
     "on-click": "",
-    "on-click-right": ""
+    "on-click-right": "",
+    "calendar": {
+      "mode": "month",
+      "mode-month": "month",
+      "weeks-pos": "right",
+      "format": {
+        "months": "<span color='#88c0d0'><b>{}</b></span>",
+        "days": "<span color='#e5e9f0'>{}</span>",
+        "weeks": "<span color='#8b949e'>W{}</span>",
+        "today": "<span color='#0f1419' background='#88c0d0'><b>{}</b></span>"
+      }
+    }
   },
   "cpu": {
     "format": "󰻠",
@@ -71,21 +83,35 @@
       ]
     },
     "scroll-step": 5,
-    "on-click": "/home/cerie/.config/hypr/scripts/volume-menu.sh",
+    "on-click": "/home/cerie/.config/hypr/scripts/volume-slider.sh",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
-    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
+    "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
     "tooltip": true,
-    "tooltip-format": "{volume}% — scroll to adjust"
+    "tooltip-format": "{volume}% · click for slider · scroll adjusts"
+  },
+  "backlight": {
+    "format": "󰃠",
+    "format-icons": [
+      "󰃞",
+      "󰃟",
+      "󰃠"
+    ],
+    "on-scroll-up": "brightnessctl set +5%",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "on-click": "/home/cerie/.config/hypr/scripts/brightness-slider.sh",
+    "tooltip": true,
+    "tooltip-format": "Brightness {percent}% · min 1%"
   },
   "network": {
     "format-wifi": "󰤨",
     "format-ethernet": "󰈀",
     "format-disconnected": "󰤮",
-    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}\nclick to manage",
     "tooltip-format-ethernet": "{ifname}\n{ipaddr}/{cidr}",
-    "tooltip-format-disconnected": "disconnected",
-    "on-click": "nm-connection-editor || nmtui",
+    "tooltip-format-disconnected": "disconnected · click to connect",
+    "on-click": "/home/cerie/.config/hypr/scripts/network-menu.sh",
+    "on-click-right": "nm-connection-editor || nmtui",
     "max-length": 20
   },
   "battery": {
