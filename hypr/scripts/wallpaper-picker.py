@@ -42,14 +42,8 @@ def ensure_hypr_env():
 def apply_wallpaper(path: str):
     ensure_hypr_env()
     try:
-        subprocess.run(["hyprctl", "hyprpaper", wallpaper := f",{path}"], check=False,
-                       capture_output=True)
-    except Exception:
-        pass
-    # also try correct call
-    try:
-        subprocess.run(["hyprctl", "hyprpaper", "wallpaper", f",{path}"], check=False,
-                       capture_output=True)
+        subprocess.run(["hyprctl", "hyprpaper", "wallpaper", f",{path}"],
+                       check=False, capture_output=True, timeout=3)
     except Exception:
         pass
 
@@ -167,10 +161,9 @@ class Picker(Gtk.Window):
             name.set_ellipsize(3)  # END
             name.get_style_context().add_class("cap")
             box.pack_start(name, False, False, 0)
+            box._wall_path = f
             box.show_all()
             flow.add(box)
-            # store path on child
-            box._wall_path = f
 
         flow.connect("child-activated", self.on_activate)
 
@@ -191,35 +184,23 @@ class Picker(Gtk.Window):
         rows = self.flow.get_selected_children()
         if not rows:
             return None
-        child = rows[0]
-        # flowbox child -> our box
-        w = child.get_child() if hasattr(child, "get_child") else child
-        # may be the box itself
-        for cand in (w, child):
-            if hasattr(cand, "_wall_path"):
-                return cand._wall_path
-            # recurse
-            if isinstance(cand, Gtk.Box):
-                for ch in cand.get_children():
-                    if hasattr(ch, "_wall_path"):
-                        return ch._wall_path
-        # fallback: iterate
-        for ch in self.flow.get_children():
-            inner = ch.get_child() if hasattr(ch, "get_child") else ch
-            if hasattr(inner, "_wall_path"):
-                if ch in rows or inner in rows:
-                    return inner._wall_path
-        # last resort first selected index
+        return self._find_path(rows[0])
+
+    @staticmethod
+    def _find_path(widget):
+        if widget is None:
+            return None
+        if hasattr(widget, "_wall_path"):
+            return widget._wall_path
+        if isinstance(widget, Gtk.Container):
+            for ch in widget.get_children():
+                found = Picker._find_path(ch)
+                if found:
+                    return found
         return None
 
     def on_activate(self, flow, child):
-        w = child.get_child() if hasattr(child, "get_child") else child
-        path = getattr(w, "_wall_path", None)
-        if not path and isinstance(w, Gtk.Box):
-            for ch in w.get_children():
-                path = getattr(ch, "_wall_path", None)
-                if path:
-                    break
+        path = self._find_path(child)
         if path:
             apply_wallpaper(path)
             Gtk.main_quit()
