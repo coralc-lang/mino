@@ -1,18 +1,23 @@
-/* mino rofi theme */
-* {
-  bg: #0f1419ee;
-  bg-alt: #161b22ff;
-  fg: #e5e9f0ff;
-  fg-dim: #8b949eff;
-  accent: #88c0d0ff;
-  border: #2e3440ff;
-  urgent: #ff7b72ff;
+configuration {
+  modi: "drun,run,window";
+  show-icons: true;
+  display-drun: "apps";
+  drun-display-format: "{name}";
   font: "JetBrains Mono Nerd Font 12";
+}
+
+* {
+  bg: #0f1419;
+  bg-alt: #161b22;
+  fg: #e5e9f0;
+  fg-dim: #8b949e;
+  accent: #88c0d0;
+  border: #2e3440;
 }
 
 window {
   width: 420px;
-  border: 1px;
+  border: 2px;
   border-color: @border;
   border-radius: 0;
   background-color: @bg;
@@ -24,6 +29,7 @@ window {
 mainbox {
   background-color: transparent;
   spacing: 10px;
+  children: [ inputbar, message, listview ];
 }
 
 inputbar {
@@ -78,7 +84,7 @@ element normal normal {
 }
 
 element selected normal {
-  background-color: alpha(#88c0d0, 0.20);
+  background-color: #1a3040;
   text-color: @accent;
   border: 1px;
   border-color: @accent;
