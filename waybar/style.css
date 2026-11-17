@@ -1,16 +1,16 @@
-/* mino waybar — thin side panel */
+/* mino waybar — side panel */
 @import url("file:///home/cerie/.config/hypr/generated/waybar.css");
 
 * {
   border: none;
   border-radius: 0;
   font-family: "JetBrains Mono Nerd Font", "JetBrainsMono Nerd Font", sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   min-height: 0;
 }
 
 window#waybar {
-  background-color: alpha(@bg, 0.94);
+  background-color: alpha(@bg, 0.96);
   color: @fg;
   border: 1px solid @border-dim;
 }
@@ -26,34 +26,37 @@ window#waybar {
 #custom-notifications,
 #custom-settings,
 #custom-session {
-  padding: 7px 2px;
-  margin: 1px 2px;
+  padding: 10px 4px;
+  margin: 2px 4px;
   background-color: transparent;
   color: @on-surface;
   border-radius: 0;
+  min-height: 28px;
 }
 
 #custom-launcher {
   color: @accent;
-  font-size: 16px;
-  padding-top: 10px;
+  font-size: 18px;
+  padding-top: 14px;
 }
 
-/* current workspace number only */
 #custom-workspace {
   color: @accent;
   font-weight: 700;
-  font-size: 14px;
-  background-color: alpha(@accent, 0.14);
-  padding: 6px 2px;
-  margin: 2px 4px;
+  font-size: 16px;
+  background-color: alpha(@accent, 0.16);
+  padding: 8px 4px;
+  margin: 4px 6px;
 }
 
+/* vertical clock — two lines HH / MM */
 #clock {
   color: @fg;
-  font-weight: 600;
-  font-size: 11px;
-  padding: 8px 2px;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.15;
+  padding: 12px 4px;
+  margin-top: 8px;
 }
 
 #clock:hover {
@@ -62,12 +65,10 @@ window#waybar {
 }
 
 #cpu,
-#memory,
-#pulseaudio,
-#network,
-#battery {
+#memory {
   color: @on-surface-variant;
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 #cpu:hover,
@@ -75,12 +76,15 @@ window#waybar {
 #pulseaudio:hover,
 #network:hover,
 #battery:hover {
-  background-color: alpha(@accent, 0.12);
+  background-color: alpha(@accent, 0.14);
   color: @accent;
 }
 
-#cpu #memory {
-  color: @on-surface-variant;
+#pulseaudio,
+#network,
+#battery {
+  color: @on-surface;
+  font-size: 13px;
 }
 
 #pulseaudio.muted { color: @error; }
@@ -95,19 +99,24 @@ window#waybar {
 #custom-notifications,
 #custom-settings {
   color: @on-surface-variant;
+  font-size: 15px;
 }
 #custom-notifications:hover,
 #custom-settings:hover {
-  background-color: alpha(@accent, 0.12);
+  background-color: alpha(@accent, 0.14);
   color: @accent;
 }
 
+/* power — accent glyph, not a red blob */
 #custom-session {
-  color: @error;
-  padding-bottom: 10px;
+  color: @accent;
+  font-size: 17px;
+  padding-bottom: 14px;
+  margin-top: auto;
 }
 #custom-session:hover {
-  background-color: alpha(@error, 0.15);
+  background-color: alpha(@accent, 0.18);
+  color: @fg;
 }
 
 tooltip {
@@ -118,4 +127,4 @@ tooltip {
 }
 tooltip label { color: @fg; }
 
-@keyframes blink { to { color: @fg; } }
+@keyframes blink { to { opacity: 0.55; } }

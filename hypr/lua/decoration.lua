@@ -34,14 +34,14 @@ hl.config({
     },
     blur = {
       enabled = true,
-      size = 6,
-      passes = 2,
+      size = 8,
+      passes = 3,
       vibrancy = 0.15,
       vibrancy_darkness = 0.4,
       special = true,
       popups = true,
       new_optimizations = true,
-      ignore_opacity = false,
+      ignore_opacity = true,
     },
   },
   misc = {

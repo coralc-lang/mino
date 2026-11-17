@@ -7,7 +7,7 @@ hl.window_rule({
   suppress_event = "fullscreen",
 })
 
--- Floats
+-- Floats (dialogs / small popups — these get blur via decoration.blur.popups)
 hl.window_rule({ name = "float-pavucontrol", match = { class = "^pavucontrol$" }, float = true })
 hl.window_rule({ name = "float-nm-conn", match = { class = "^nm-connection-editor$" }, float = true })
 hl.window_rule({ name = "float-blueman", match = { class = "^blueman-manager$" }, float = true })
@@ -25,10 +25,12 @@ hl.window_rule({
   float = true,
 })
 
--- Opacity exceptions
+-- Opacity exceptions (opaque = no blur through these)
 hl.window_rule({ name = "opaque-firefox", match = { class = "^firefox$" }, opaque = true })
 hl.window_rule({ name = "opaque-kitty", match = { class = "^kitty$" }, opaque = true })
 hl.window_rule({ name = "opaque-nautilus", match = { class = "^org.gnome.Nautilus$" }, opaque = true })
+hl.window_rule({ name = "opaque-zed", match = { class = "^zed$" }, opaque = true })
+hl.window_rule({ name = "opaque-pulsar", match = { class = "^Pulsar$" }, opaque = true })
 
 -- Idle inhibit while fullscreen
 hl.window_rule({
@@ -38,16 +40,11 @@ hl.window_rule({
 })
 
 -- Fix XWayland drag ghosts
-hl.window_rule({
-  name = "fix-xwayland-drags",
-  match = { class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false },
-  no_focus = true,
-})
+hl.layer_rule({ match = { namespace = "^widgets$" }, blur = false })
 
--- Layer rules — waybar + mako blur
-hl.layer_rule({ match = { namespace = "^waybar$" }, blur = true, ignore_alpha = 0 })
-hl.layer_rule({ match = { namespace = "^notifications$" }, blur = true, ignore_alpha = 0 })
-hl.layer_rule({ match = { namespace = "^mako$" }, blur = true, ignore_alpha = 0 })
+-- NO blur on waybar (layer blur looked wrong on the side panel)
+-- Keep mako blur only (notifications over content)
+hl.layer_rule({ match = { namespace = "^mako$" }, blur = true, ignore_alpha = 0.3 })
 
 -- Workspace 1 default on laptop panel
 hl.workspace_rule({

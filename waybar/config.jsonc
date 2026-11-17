@@ -1,30 +1,33 @@
 {
   "layer": "top",
   "position": "right",
-  "width": 36,
+  "width": 56,
   "height": "100%",
   "margin": "4px 4px 4px 0",
-  "padding": "6px 2px",
-  "spacing": 2,
+  "padding": "8px 3px",
+  "spacing": 4,
   "reload_style_on_change": true,
   "modules-left": [
     "custom/launcher",
     "custom/workspace",
     "clock",
     "cpu",
-    "memory",
+    "memory"
+  ],
+  "modules-center": [
     "pulseaudio",
     "network",
-    "battery",
+    "battery"
+  ],
+  "modules-right": [
     "custom/notifications",
     "custom/settings",
     "custom/session"
   ],
-  "modules-center": [],
-  "modules-right": [],
   "custom/launcher": {
     "format": "󰣃",
-    "tooltip": false,
+    "tooltip": true,
+    "tooltip-format": "mino",
     "on-click": "",
     "on-click-right": ""
   },
@@ -32,11 +35,13 @@
     "exec": "/home/cerie/.config/hypr/scripts/waybar-workspace.sh",
     "interval": 1,
     "format": "{}",
-    "tooltip": false,
-    "on-click": "hyprctl dispatch workspace e+1"
+    "tooltip": true,
+    "tooltip-format": "workspace",
+    "on-click": "hyprctl dispatch workspace e+1",
+    "on-click-right": "hyprctl dispatch workspace e-1"
   },
   "clock": {
-    "format": "{:%H\\n%M}",
+    "format": "{:%H}\n{:%M}",
     "format-alt": "{:%Y-%m-%d %H:%M:%S}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "interval": 30,
@@ -53,24 +58,25 @@
     "format": "󰍛",
     "interval": 3,
     "tooltip": true,
-    "tooltip-format": "RAM {percentage}% — {used:GiB}G"
+    "tooltip-format": "RAM {percentage}% — {used} / {total}"
   },
   "pulseaudio": {
     "format": "{icon}",
     "format-muted": "󰝟",
     "format-icons": {
       "default": [
-        "󰔿",
-        "󰕀",
-        "󰕎"
+        "󰕿",
+        "󰖀",
+        "󰕾"
       ]
     },
     "scroll-step": 5,
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-click-right": "pavucontrol",
+    "on-click": "/home/cerie/.config/hypr/scripts/volume-menu.sh",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
-    "tooltip": true
+    "tooltip": true,
+    "tooltip-format": "{volume}% — scroll to adjust"
   },
   "network": {
     "format-wifi": "󰤨",
@@ -89,39 +95,42 @@
       "critical": 15
     },
     "format": "{icon}",
-    "format-charging": "󰊄",
+    "format-charging": "󰂄",
     "format-plugged": "󰚥",
-    "format-full": "󰑹",
+    "format-full": "󰁹",
     "format-icons": [
-      "󰑺",
-      "󰑻",
-      "󰑼",
-      "󰑽",
-      "󰑾",
-      "󰑿",
-      "󰒀",
-      "󰒁",
-      "󰒂",
-      "󰑹"
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
     ],
     "tooltip-format": "{capacity}% — {timeTo}",
     "on-click": ""
   },
   "custom/notifications": {
-    "format": "󰊚",
+    "format": "󰂚",
     "tooltip": true,
+    "tooltip-format": "Notifications",
     "on-click": "makoctl dismiss -a",
     "on-click-right": "makoctl restore",
     "on-click-middle": "makoctl mode -t dnd || true"
   },
   "custom/settings": {
-    "format": "󰖓",
-    "tooltip": false,
+    "format": "󰒓",
+    "tooltip": true,
+    "tooltip-format": "Settings",
     "on-click": "/home/cerie/.config/hypr/scripts/settings.sh"
   },
   "custom/session": {
-    "format": "󰑅",
-    "tooltip": false,
+    "format": "⏻",
+    "tooltip": true,
+    "tooltip-format": "Session",
     "on-click": "/home/cerie/.config/hypr/scripts/session-menu.sh",
     "on-click-right": "hyprlock"
   }

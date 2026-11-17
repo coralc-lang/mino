@@ -183,7 +183,7 @@ shape {
     monitor =
     size = 100%, 2
     color = rgba(${ACCENT}88)
-    position = 0, 40%
+    position = 0, 42%
     halign = center
     valign = top
     rounding = 0
@@ -195,7 +195,7 @@ label {
     font_size = 110
     font_family = \$font
     color = rgba(${FG}ff)
-    position = 0, 12%
+    position = 0, 22%
     halign = center
     valign = center
 }
@@ -206,7 +206,7 @@ label {
     font_size = 16
     font_family = \$font
     color = rgba(${ON_SURFACE_VARIANT}dd)
-    position = 0, 4%
+    position = 0, 10%
     halign = center
     valign = center
 }
@@ -217,7 +217,7 @@ label {
     font_size = 13
     font_family = \$font
     color = rgba(${ACCENT}ff)
-    position = 0, -8%
+    position = 0, -4%
     halign = center
     valign = center
 }
@@ -251,7 +251,7 @@ label {
     font_size = 12
     font_family = \$font
     color = rgba(${ON_SURFACE_VARIANT}aa)
-    position = 0, -26%
+    position = 0, -30%
     halign = center
     valign = center
 }
@@ -260,7 +260,7 @@ shape {
     monitor =
     size = 100%, 2
     color = rgba(${ACCENT}55)
-    position = 0, -40%
+    position = 0, -42%
     halign = center
     valign = bottom
     rounding = 0
@@ -295,6 +295,122 @@ selection {
     outline-color: #${ACCENT};
 }
 EOF
+
+# Thunar / GTK app polish (kept with theme colors)
+cat >> "$GEN/gtk.css" <<'GEOF'
+
+/* --- mino app polish / thunar sidebar --- */
+.thunar .sidebar,
+.thunar sidebar,
+treeview.sidebar,
+.sidebar {
+  background-color: @sidebar_bg_color;
+  border-right: 1px solid @border-color;
+  font-size: 12px;
+}
+
+.thunar .sidebar row,
+.thunar sidebar row,
+treeview.sidebar row {
+  min-height: 30px;
+  padding: 6px 10px;
+  margin: 2px 6px;
+  border-radius: 0;
+  color: @window_fg_color;
+}
+
+.thunar .sidebar row:hover,
+treeview.sidebar row:hover {
+  background-color: alpha(@accent_color, 0.12);
+}
+
+.thunar .sidebar row:selected,
+treeview.sidebar row:selected,
+.thunar .sidebar row:selected:hover {
+  background-color: alpha(@accent_color, 0.28);
+  color: @accent_color;
+  border-left: 3px solid @accent_color;
+}
+
+.thunar .sidebar treeview,
+.thunar sidebar treeview {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.thunar iconview,
+.thunar .iconview {
+  background-color: @view_bg_color;
+}
+
+.thunar path-bar button,
+.thunar .path-bar button {
+  border: 1px solid @border-color;
+  background-color: @card_bg_color;
+  color: @window_fg_color;
+  border-radius: 0;
+  padding: 3px 10px;
+  margin: 0 2px;
+  min-height: 24px;
+}
+
+.thunar path-bar button:hover,
+.thunar .path-bar button:hover {
+  border-color: @accent_color;
+  color: @accent_color;
+}
+
+.thunar toolbar,
+.thunar .toolbar {
+  background-color: @headerbar_bg_color;
+  border-bottom: 1px solid @border-color;
+  min-height: 36px;
+}
+
+.thunar statusbar,
+.thunar .statusbar {
+  background-color: @sidebar_bg_color;
+  border-top: 1px solid @border-color;
+  color: @window_fg_color;
+  opacity: 0.9;
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+entry {
+  border-radius: 0;
+  border: 1px solid @border-color;
+  background-color: @view_bg_color;
+  color: @window_fg_color;
+  padding: 5px 8px;
+}
+
+entry:focus {
+  border-color: @accent_color;
+}
+
+button {
+  border-radius: 0;
+}
+
+scrollbar {
+  background: transparent;
+  min-width: 7px;
+  min-height: 7px;
+}
+
+scrollbar slider {
+  background-color: alpha(@window_fg_color, 0.35);
+  border-radius: 0;
+  min-width: 7px;
+  min-height: 7px;
+}
+
+scrollbar slider:hover {
+  background-color: @accent_color;
+}
+GEOF
 
 mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
 cp "$GEN/gtk.css" "$HOME/.config/gtk-3.0/gtk.css"

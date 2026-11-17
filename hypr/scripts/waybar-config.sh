@@ -5,15 +5,16 @@ set -euo pipefail
 STATE="$HOME/.config/hypr/state"
 OUT="$HOME/.config/waybar/config.jsonc"
 WS_HELPER="$HOME/.config/hypr/scripts/waybar-workspace.sh"
+SCRIPTS="$HOME/.config/hypr/scripts"
 mkdir -p "$(dirname "$OUT")" "$STATE"
 
 read_state() { [[ -f "$STATE/$1" ]] && cat "$STATE/$1" || echo "${2:-0}"; }
-
 expanded="$(read_state waybar-expanded 0)"
 
+# vertical clock: real newline so it stacks HH over MM (not literal \n)
 if [[ "$expanded" == "1" ]]; then
-  width=160
-  clock_format='{:%H:%M}'
+  width=64
+  clock_format=$'{:%H}\n{:%M}'
   net_wifi='󰤨 {essid}'
   net_eth='󰈀 {ifname}'
   net_disc='󰤮'
@@ -22,8 +23,8 @@ if [[ "$expanded" == "1" ]]; then
   cpu_fmt='󰻠 {usage}%'
   mem_fmt='󰍛 {percentage}%'
 else
-  width=36
-  clock_format='{:%H\n%M}'
+  width=56
+  clock_format=$'{:%H}\n{:%M}'
   net_wifi='󰤨'
   net_eth='󰈀'
   net_disc='󰤮'
@@ -33,45 +34,54 @@ else
   mem_fmt='󰍛'
 fi
 
-# Write with python for safe JSON (no nested-quote hell)
 WS_HELPER="$WS_HELPER" OUT="$OUT" WIDTH="$width" \
 CLOCK="$clock_format" NET_WIFI="$net_wifi" NET_ETH="$net_eth" NET_DISC="$net_disc" \
 VOL="$vol_fmt" BAT="$bat_fmt" CPU="$cpu_fmt" MEM="$mem_fmt" \
-HOME_DIR="$HOME" \
+SCRIPTS="$SCRIPTS" HOME_DIR="$HOME" \
 python3 - <<'PY'
 import json, os
 out = os.environ["OUT"]
 ws = os.environ["WS_HELPER"]
 width = int(os.environ["WIDTH"])
 home = os.environ["HOME_DIR"]
+scripts = os.environ["SCRIPTS"]
+clock = os.environ["CLOCK"]  # contains real newlines
 
+# Distribute across full height of right-side bar:
+# left = top, center = mid, right = bottom
 cfg = {
   "layer": "top",
   "position": "right",
   "width": width,
   "height": "100%",
   "margin": "4px 4px 4px 0",
-  "padding": "6px 2px",
-  "spacing": 2,
+  "padding": "8px 3px",
+  "spacing": 4,
   "reload_style_on_change": True,
+  # TOP: identity + perf + time
   "modules-left": [
     "custom/launcher",
     "custom/workspace",
     "clock",
     "cpu",
     "memory",
+  ],
+  # MID: media / net / power
+  "modules-center": [
     "pulseaudio",
     "network",
     "battery",
+  ],
+  # BOTTOM: actions
+  "modules-right": [
     "custom/notifications",
     "custom/settings",
     "custom/session",
   ],
-  "modules-center": [],
-  "modules-right": [],
   "custom/launcher": {
     "format": "\U000f08c3",
-    "tooltip": False,
+    "tooltip": True,
+    "tooltip-format": "mino",
     "on-click": "",
     "on-click-right": "",
   },
@@ -79,11 +89,13 @@ cfg = {
     "exec": ws,
     "interval": 1,
     "format": "{}",
-    "tooltip": False,
+    "tooltip": True,
+    "tooltip-format": "workspace",
     "on-click": "hyprctl dispatch workspace e+1",
+    "on-click-right": "hyprctl dispatch workspace e-1",
   },
   "clock": {
-    "format": os.environ["CLOCK"],
+    "format": clock,
     "format-alt": "{:%Y-%m-%d %H:%M:%S}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "interval": 30,
@@ -100,18 +112,19 @@ cfg = {
     "format": os.environ["MEM"],
     "interval": 3,
     "tooltip": True,
-    "tooltip-format": "RAM {percentage}% — {used:GiB}G",
+    "tooltip-format": "RAM {percentage}% — {used} / {total}",
   },
   "pulseaudio": {
     "format": os.environ["VOL"],
-    "format-muted": "\U000f075f",
-    "format-icons": {"default": ["\U000f053f", "\U000f0540", "\U000f054e"]},
+    "format-muted": "󰝟",
+    "format-icons": {"default": ["󰕿", "󰖀", "󰕾"]},
     "scroll-step": 5,
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-click-right": "pavucontrol",
+    "on-click": f"{scripts}/volume-menu.sh",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
     "tooltip": True,
+    "tooltip-format": "{volume}% — scroll to adjust",
   },
   "network": {
     "format-wifi": os.environ["NET_WIFI"],
@@ -127,31 +140,33 @@ cfg = {
     "interval": 30,
     "states": {"warning": 30, "critical": 15},
     "format": os.environ["BAT"],
-    "format-charging": "\U000f0284",
-    "format-plugged": "\U000f06a5",
-    "format-full": "\U000f0479",
+    "format-charging": "󰂄",
+    "format-plugged": "󰚥",
+    "format-full": "󰁹",
     "format-icons": [
-      "\U000f047a","\U000f047b","\U000f047c","\U000f047d","\U000f047e",
-      "\U000f047f","\U000f0480","\U000f0481","\U000f0482","\U000f0479"
+      "󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"
     ],
     "tooltip-format": "{capacity}% — {timeTo}",
     "on-click": "",
   },
   "custom/notifications": {
-    "format": "\U000f029a",
+    "format": "󰂚",
     "tooltip": True,
+    "tooltip-format": "Notifications",
     "on-click": "makoctl dismiss -a",
     "on-click-right": "makoctl restore",
     "on-click-middle": "makoctl mode -t dnd || true",
   },
   "custom/settings": {
-    "format": "\U000f0593",
-    "tooltip": False,
+    "format": "󰒓",
+    "tooltip": True,
+    "tooltip-format": "Settings",
     "on-click": f"{home}/.config/hypr/scripts/settings.sh",
   },
   "custom/session": {
-    "format": "\U000f0445",
-    "tooltip": False,
+    "format": "⏻",
+    "tooltip": True,
+    "tooltip-format": "Session",
     "on-click": f"{home}/.config/hypr/scripts/session-menu.sh",
     "on-click-right": "hyprlock",
   },
