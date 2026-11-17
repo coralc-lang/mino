@@ -9,14 +9,14 @@ local SCRIPTS = HOME .. "/.config/hypr/scripts"
 
 local terminal = "kitty"
 local editor = "zed"
-local fileManager = "nautilus"
+local fileManager = "thunar"  -- thunar preferred; nautilus fallback via shell
 local browser = "firefox"
 local menu = "hyprlauncher"
 
 -- Apps
 hl.bind("SUPER + Return", hl.dsp.exec_cmd(terminal))
 hl.bind("SUPER + C", hl.dsp.exec_cmd(editor))
-hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
+hl.bind("SUPER + E", hl.dsp.exec_cmd("command -v thunar >/dev/null && thunar || nautilus"))
 hl.bind("SUPER + B", hl.dsp.exec_cmd(browser))
 hl.bind("SUPER + G", hl.dsp.exec_cmd("godot"))
 hl.bind("SUPER + R", hl.dsp.exec_cmd(menu))
