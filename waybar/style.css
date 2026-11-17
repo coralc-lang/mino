@@ -54,7 +54,6 @@ window#waybar {
   color: @fg;
   font-weight: 700;
   font-size: 13px;
-  line-height: 1.15;
   padding: 12px 4px;
   margin-top: 8px;
 }
@@ -112,7 +111,6 @@ window#waybar {
   color: @accent;
   font-size: 17px;
   padding-bottom: 14px;
-  margin-top: auto;
 }
 #custom-session:hover {
   background-color: alpha(@accent, 0.18);
