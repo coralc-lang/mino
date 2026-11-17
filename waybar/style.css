@@ -1,0 +1,171 @@
+/* mino waybar side panel — colors from generated/waybar.css */
+@import url("file:///home/cerie/.config/hypr/generated/waybar.css");
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrains Mono Nerd Font", "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: alpha(@bg, 0.92);
+  color: @fg;
+  border: 1px solid @border-dim;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+}
+
+#custom-launcher,
+#workspaces,
+#clock,
+#custom-spacer,
+#pulseaudio,
+#network,
+#battery,
+#custom-notifications,
+#custom-settings,
+#custom-session {
+  padding: 10px 6px;
+  margin: 2px 4px;
+  background-color: transparent;
+  color: @on-surface;
+  border-radius: 0;
+}
+
+#custom-launcher {
+  color: @accent;
+  font-size: 18px;
+  padding-top: 12px;
+}
+
+#custom-launcher:hover {
+  background-color: alpha(@accent, 0.15);
+}
+
+/* workspaces */
+#workspaces {
+  padding: 6px 4px;
+}
+
+#workspaces button {
+  padding: 4px 6px;
+  margin: 1px 2px;
+  color: @on-surface-variant;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  font-size: 11px;
+}
+
+#workspaces button.active {
+  color: @accent;
+  background-color: alpha(@accent, 0.14);
+}
+
+#workspaces button.urgent {
+  color: @error;
+  background-color: alpha(@error, 0.16);
+}
+
+#workspaces button:hover {
+  background-color: alpha(@accent, 0.12);
+}
+
+/* clock */
+#clock {
+  color: @fg;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 12px 6px;
+}
+
+#clock:hover {
+  background-color: alpha(@accent, 0.12);
+  color: @accent;
+}
+
+#custom-spacer {
+  background: linear-gradient(to bottom, transparent, @border-dim, transparent);
+  min-height: 24px;
+  margin: 6px 12px;
+  padding: 0;
+}
+
+#pulseaudio,
+#network,
+#battery {
+  color: @on-surface-variant;
+  font-size: 12px;
+}
+
+#pulseaudio:hover,
+#network:hover,
+#battery:hover {
+  background-color: alpha(@accent, 0.12);
+  color: @accent;
+}
+
+#pulseaudio.muted {
+  color: @error;
+}
+
+#network.disconnected {
+  color: @warning;
+}
+
+#network.wifi {
+  color: @on-surface;
+}
+
+#battery.charging,
+#battery.plugged {
+  color: @success;
+}
+
+#battery.warning:not(.charging) {
+  color: @warning;
+}
+
+#battery.critical:not(.charging) {
+  color: @error;
+  animation: blink 1s linear infinite;
+}
+
+#custom-notifications,
+#custom-settings {
+  color: @on-surface-variant;
+}
+
+#custom-notifications:hover,
+#custom-settings:hover {
+  background-color: alpha(@accent, 0.12);
+  color: @accent;
+}
+
+#custom-session {
+  color: @error;
+  padding-bottom: 12px;
+}
+
+#custom-session:hover {
+  background-color: alpha(@error, 0.15);
+}
+
+tooltip {
+  background-color: @surface-hi;
+  color: @fg;
+  border: 1px solid @border-dim;
+  border-radius: 0;
+}
+
+tooltip label {
+  color: @fg;
+}
+
+@keyframes blink {
+  to {
+    color: @fg;
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "layer": "top",
+  "position": "right",
+  "width": 200,
+  "height": "100%",
+  "margin": "6px 6px 6px 0",
+  "padding": "8px 4px",
+  "spacing": 6,
+  "reload_style_on_change": true,
+  "modules-left": ["custom/launcher"],"clock","custom/spacer","pulseaudio","network","battery","custom/notifications","custom/settings","custom/session",
+  "modules-center": [],
+  "modules-right": [],
+
+  "custom/launcher": {
+    "format": "󰣇",
+    "tooltip": false,
+    "on-click": "hyprlauncher",
+    "on-click-right": "kitty -e btop"
+  },
+
+  "workspaces": {
+    "format": "{name}",
+    "format-icons": {
+      "urgent": "󰌕",
+      "active": "●",
+      "default": "○"
+    },
+    "sort-by-number": true,
+    "on-click": "activate",
+    "tooltip": false
+  },
+
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%Y-%m-%d %H:%M:%S}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "interval": 30,
+    "on-click": "notify-send \"Tuesday, November 17 2026\"",
+    "on-click-right": "gnome-calendar || kalender || true"
+  },
+
+  "custom/spacer": {
+    "format": " ",
+    "tooltip": false
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 muted",
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"]
+    },
+    "scroll-step": 5,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
+    "tooltip": true
+  },
+
+  "network": {
+    "format-wifi": "󰤨 {essid}",
+    "format-ethernet": "󰈀 {ifname}",
+    "format-disconnected": "󰤮 offline",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}",
+    "tooltip-format-ethernet": "{ifname}\n{ipaddr}/{cidr}",
+    "tooltip-format-disconnected": "disconnected",
+    "on-click": "nm-connection-editor || nmtui",
+    "max-length": 24
+  },
+
+  "battery": {
+    "interval": 30,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰚥 {capacity}%",
+    "format-full": "󰁹 {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "{capacity}% — {timeTo}",
+    "on-click": ""
+  },
+
+  "custom/notifications": {
+    "format": "󰂚",
+    "tooltip": true,
+    "on-click": "makoctl dismiss -a",
+    "on-click-right": "makoctl restore",
+    "on-click-middle": "makoctl mode -t dnd || true"
+  },
+
+  "custom/settings": {
+    "format": "󰒓",
+    "tooltip": false,
+    "on-click": "/home/cerie/.config/hypr/scripts/settings.sh"
+  },
+
+  "custom/session": {
+    "format": "󰐥",
+    "tooltip": false,
+    "on-click": "wlogout || hyprctl dispatch exit",
+    "on-click-right": "hyprlock"
+  }
+}

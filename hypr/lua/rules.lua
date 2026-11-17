@@ -1,0 +1,57 @@
+-- Window / layer / workspace rules
+
+-- Never let apps force fullscreen on open (maximize is allowed)
+hl.window_rule({
+  name = "suppress-fullscreen",
+  match = { class = ".*" },
+  suppress_event = "fullscreen",
+})
+
+-- Floats
+hl.window_rule({ name = "float-pavucontrol", match = { class = "^pavucontrol$" }, float = true })
+hl.window_rule({ name = "float-nm-conn", match = { class = "^nm-connection-editor$" }, float = true })
+hl.window_rule({ name = "float-blueman", match = { class = "^blueman-manager$" }, float = true })
+hl.window_rule({ name = "float-calc", match = { class = "^org.gnome.Calculator$" }, float = true })
+hl.window_rule({
+  name = "float-nautilus-copy",
+  match = { class = "^org.gnome.Nautilus$", title = "^(Copying|Moving)" },
+  float = true,
+})
+hl.window_rule({ name = "float-hyprpicker", match = { class = "^hyprpicker$" }, float = true })
+hl.window_rule({ name = "float-imv", match = { class = "^imv$" }, float = true })
+hl.window_rule({
+  name = "float-pip",
+  match = { class = "^firefox$", title = "^(Picture-in-Picture)$" },
+  float = true,
+})
+
+-- Opacity exceptions
+hl.window_rule({ name = "opaque-firefox", match = { class = "^firefox$" }, opaque = true })
+hl.window_rule({ name = "opaque-kitty", match = { class = "^kitty$" }, opaque = true })
+hl.window_rule({ name = "opaque-nautilus", match = { class = "^org.gnome.Nautilus$" }, opaque = true })
+
+-- Idle inhibit while fullscreen
+hl.window_rule({
+  name = "idle-inhibit-fs",
+  match = { fullscreen = true },
+  idle_inhibit = "fullscreen",
+})
+
+-- Fix XWayland drag ghosts
+hl.window_rule({
+  name = "fix-xwayland-drags",
+  match = { class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false },
+  no_focus = true,
+})
+
+-- Layer rules — waybar + mako blur
+hl.layer_rule({ match = { namespace = "^waybar$" }, blur = true, ignore_alpha = 0 })
+hl.layer_rule({ match = { namespace = "^notifications$" }, blur = true, ignore_alpha = 0 })
+hl.layer_rule({ match = { namespace = "^mako$" }, blur = true, ignore_alpha = 0 })
+
+-- Workspace 1 default on laptop panel
+hl.workspace_rule({
+  workspace = "1",
+  monitor = "eDP-1",
+  default = true,
+})

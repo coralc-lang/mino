@@ -1,0 +1,15 @@
+[SddmGreeterTheme]
+Name=mino
+Description=mino dark teal greeter
+Author=cerie
+Copyright=(c) 2026 cerie
+License=MIT
+Type=sddm-theme
+Version=0.1.0
+Website=
+Screenshot=mino.png
+MainScript=Main.qml
+ConfigFile=theme.conf
+TranslationsDirectory=translations
+Theme-Id=mino
+Theme-API=6.0

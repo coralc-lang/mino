@@ -1,0 +1,13 @@
+# mino thunar
+[Configuration]
+ShowStatusbar=TRUE
+ShowLocationEntry=TRUE
+ShowThumbnails=TRUE
+TreePane=TRUE
+MiscSingleClick=FALSE
+MiscCaseSensitive=TRUE
+MiscTextShadowMode=FALSE
+MiscTreeExploreSharpens=TRUE
+MiscThumbnailMode=STD
+MiscShowIconNames=FALSE
+MiscCompactView=TRUE
