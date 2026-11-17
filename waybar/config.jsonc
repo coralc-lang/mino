@@ -7,52 +7,64 @@
   "padding": "6px 2px",
   "spacing": 2,
   "reload_style_on_change": true,
-  "modules-left": ["custom/launcher","custom/workspace","clock","cpu","memory","pulseaudio","network","battery","custom/notifications","custom/settings","custom/session"],
+  "modules-left": [
+    "custom/launcher",
+    "custom/workspace",
+    "clock",
+    "cpu",
+    "memory",
+    "pulseaudio",
+    "network",
+    "battery",
+    "custom/notifications",
+    "custom/settings",
+    "custom/session"
+  ],
   "modules-center": [],
   "modules-right": [],
-
   "custom/launcher": {
-    "format": "󰣇",
+    "format": "󰣃",
     "tooltip": false,
     "on-click": "",
     "on-click-right": ""
   },
-
   "custom/workspace": {
-    "exec": "bash -c 'printf %s "$(hyprctl activeworkspace 2>/dev/null | sed -n "s/^workspace ID \\([0-9]*\\).*/\\1/p" | head -n1)"'",
+    "exec": "/home/cerie/.config/hypr/scripts/waybar-workspace.sh",
     "interval": 1,
     "format": "{}",
     "tooltip": false,
     "on-click": "hyprctl dispatch workspace e+1"
   },
-
   "clock": {
-    "format": "{:%H\n%M}",
+    "format": "{:%H\\n%M}",
     "format-alt": "{:%Y-%m-%d %H:%M:%S}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "interval": 30,
     "on-click": "",
     "on-click-right": ""
   },
-
   "cpu": {
     "format": "󰻠",
     "interval": 2,
     "tooltip": true,
     "tooltip-format": "CPU {usage}%"
   },
-
   "memory": {
     "format": "󰍛",
     "interval": 3,
     "tooltip": true,
     "tooltip-format": "RAM {percentage}% — {used:GiB}G"
   },
-
   "pulseaudio": {
     "format": "{icon}",
     "format-muted": "󰝟",
-    "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
+    "format-icons": {
+      "default": [
+        "󰔿",
+        "󰕀",
+        "󰕎"
+      ]
+    },
     "scroll-step": 5,
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-click-right": "pavucontrol",
@@ -60,7 +72,6 @@
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
     "tooltip": true
   },
-
   "network": {
     "format-wifi": "󰤨",
     "format-ethernet": "󰈀",
@@ -71,35 +82,45 @@
     "on-click": "nm-connection-editor || nmtui",
     "max-length": 20
   },
-
   "battery": {
     "interval": 30,
-    "states": { "warning": 30, "critical": 15 },
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
     "format": "{icon}",
-    "format-charging": "󰂄",
+    "format-charging": "󰊄",
     "format-plugged": "󰚥",
-    "format-full": "󰁹",
-    "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "format-full": "󰑹",
+    "format-icons": [
+      "󰑺",
+      "󰑻",
+      "󰑼",
+      "󰑽",
+      "󰑾",
+      "󰑿",
+      "󰒀",
+      "󰒁",
+      "󰒂",
+      "󰑹"
+    ],
     "tooltip-format": "{capacity}% — {timeTo}",
     "on-click": ""
   },
-
   "custom/notifications": {
-    "format": "󰂚",
+    "format": "󰊚",
     "tooltip": true,
     "on-click": "makoctl dismiss -a",
     "on-click-right": "makoctl restore",
     "on-click-middle": "makoctl mode -t dnd || true"
   },
-
   "custom/settings": {
-    "format": "󰒓",
+    "format": "󰖓",
     "tooltip": false,
     "on-click": "/home/cerie/.config/hypr/scripts/settings.sh"
   },
-
   "custom/session": {
-    "format": "󰐥",
+    "format": "󰑅",
     "tooltip": false,
     "on-click": "/home/cerie/.config/hypr/scripts/session-menu.sh",
     "on-click-right": "hyprlock"
