@@ -14,7 +14,7 @@ expanded="$(read_state waybar-expanded 0)"
 # vertical clock: real newline so it stacks HH over MM (not literal \n)
 if [[ "$expanded" == "1" ]]; then
   width=64
-  clock_format=$'{:%H}\n{:%M}'
+  clock_format='{:%H\n%M}'
   net_wifi='󰤨 {essid}'
   net_eth='󰈀 {ifname}'
   net_disc='󰤮'
@@ -24,7 +24,7 @@ if [[ "$expanded" == "1" ]]; then
   mem_fmt='󰍛 {percentage}%'
 else
   width=56
-  clock_format=$'{:%H}\n{:%M}'
+  clock_format='{:%H\n%M}'
   net_wifi='󰤨'
   net_eth='󰈀'
   net_disc='󰤮'

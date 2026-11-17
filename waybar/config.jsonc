@@ -41,7 +41,7 @@
     "on-click-right": "hyprctl dispatch workspace e-1"
   },
   "clock": {
-    "format": "{:%H}\n{:%M}",
+    "format": "{:%H\\n%M}",
     "format-alt": "{:%Y-%m-%d %H:%M:%S}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "interval": 30,
