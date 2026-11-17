@@ -11,11 +11,12 @@ read_state() { [[ -f "$STATE/$1" ]] && cat "$STATE/$1" || echo "${2:-0}"; }
 ws="$(read_state show-workspaces 0)"
 expanded="$(read_state waybar-expanded 1)"
 
-modules='["custom/launcher"]'
+mods=('"custom/launcher"')
 if [[ "$ws" == "1" ]]; then
-  modules="$modules,\"workspaces\""
+  mods+=('"workspaces"')
 fi
-modules="$modules,\"clock\",\"custom/spacer\",\"pulseaudio\",\"network\",\"battery\",\"custom/notifications\",\"custom/settings\",\"custom/session\""
+mods+=('"clock"' '"custom/spacer"' '"pulseaudio"' '"network"' '"battery"' '"custom/notifications"' '"custom/settings"' '"custom/session"')
+modules="[$(IFS=,; echo "${mods[*]}")]"
 
 if [[ "$expanded" == "1" ]]; then
   width=200
