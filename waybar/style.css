@@ -1,22 +1,32 @@
 @import url("file:///home/cerie/.config/hypr/generated/waybar.css");
 
-* { border: none; border-radius: 0; font-family: "Inter", "Noto Sans", sans-serif; font-size: 12px; min-height: 0; }
+* { border: none; border-radius: 0; font-family: "Inter", "Noto Sans", sans-serif; font-size: 12px; min-height: 0; margin: 0; }
 
 window#waybar { background-color: transparent; border: none; }
 
-#custom\:launcher { background-color: rgba(24,27,34,0.94); border:1px solid rgba(255,255,255,0.08); border-radius:12px; min-width:36px; min-height:36px; color:#e09f5a; }
-#custom\:workspace { background-color: rgba(24,27,34,0.94); border:1px solid rgba(255,255,255,0.08); border-radius:12px; min-width:32px; min-height:32px; color:#8b929e; }
+#custom\:launcher, #custom\:workspace,
+#cpu, #memory, #pulseaudio, #backlight, #network, #battery,
+#custom\:notifications, #custom\:settings, #custom\:session { min-width: 32px; }
+
+#custom\:launcher { background-color: rgba(24,27,34,0.94); border:1px solid rgba(255,255,255,0.08); border-radius:12px; min-height:36px; color:#e09f5a; }
+#custom\:launcher:hover { background-color: rgba(255,255,255,0.08); }
+
+#custom\:workspace { background-color: rgba(24,27,34,0.94); border:1px solid rgba(255,255,255,0.08); border-radius:12px; min-height:32px; color:#8b929e; }
 #custom\:workspace:hover { background-color: rgba(255,255,255,0.08); color:#f1f3f5; }
 #custom\:workspace.active { background-color:#e09f5a; border-color:rgba(0,0,0,0.2); color:#0e0d0b; }
 
-#clock { color:#f1f3f5; font-family:"JetBrains Mono",monospace; font-weight:600; font-size:13px; padding:8px 0; }
+#clock { color:#f1f3f5; font-family:"JetBrains Mono",monospace; font-weight:600; font-size:13px; padding:8px 0; min-width:32px; }
 #clock:hover { background-color: rgba(255,255,255,0.08); }
 
-#cpu, #memory { background-color: rgba(18,19,23,0.86); border:1px solid rgba(255,255,255,0.08); border-radius:10px; min-height:30px; color:#cbd2d9; }
-#cpu:hover, #memory:hover { background-color: rgba(255,255,255,0.08); color:#e09f5a; }
+#cpu, #memory, #pulseaudio, #backlight, #network, #battery,
+#custom\:notifications, #custom\:settings, #custom\:session {
+  background-color: rgba(18,19,23,0.86); border:1px solid rgba(255,255,255,0.08); border-radius:10px; min-height:30px; color:#cbd2d9;
+}
+#cpu:hover, #memory:hover, #pulseaudio:hover, #backlight:hover, #network:hover, #battery:hover,
+#custom\:notifications:hover, #custom\:settings:hover, #custom\:session:hover {
+  background-color: rgba(255,255,255,0.08); color:#e09f5a;
+}
 
-#pulseaudio, #backlight, #network, #battery, #custom\:notifications, #custom\:settings, #custom\:session { background-color: rgba(18,19,23,0.86); border:1px solid rgba(255,255,255,0.08); border-radius:10px; min-height:30px; color:#cbd2d9; }
-#pulseaudio:hover, #backlight:hover, #network:hover, #battery:hover, #custom\:notifications:hover, #custom\:settings:hover, #custom\:session:hover { background-color: rgba(255,255,255,0.08); color:#e09f5a; }
 #pulseaudio.muted { color:#e2677a; }
 #network.disconnected { color:#e2677a; }
 #battery.charging, #battery.plugged { color:#7ee2a8; }

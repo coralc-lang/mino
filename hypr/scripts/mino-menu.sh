@@ -63,8 +63,8 @@ case "$choice" in
       rofi -show drun -theme mino -filter "$app"
     fi
     ;;
-  "All applications"*) exec /home/cerie/.config/hypr/scripts/app-grid.sh ;;
-  Settings) exec "$SCRIPTS/settings.sh" ;;
+  "All applications"*) exec python3 /home/cerie/.config/hypr/mino-ui/mino-ui.py launcher ;;
+  Settings) exec python3 /home/cerie/.config/hypr/mino-ui/mino-ui.py settings ;;
   "Wallpaper picker") exec "$SCRIPTS/wallpaper-picker.sh" ;;
   "Theme cycle") exec "$SCRIPTS/theme-cycle.sh" ;;
   "Volume slider") exec "$SCRIPTS/volume-slider.sh" ;;

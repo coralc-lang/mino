@@ -25,6 +25,10 @@ hl.window_rule({
   float = true,
 })
 
+-- Mino UI windows (launcher / settings from the mockup)
+hl.window_rule({ name = "float-mino-launcher", match = { class = "^mino\\.launcher$" }, float = true, center = true })
+hl.window_rule({ name = "float-mino-settings", match = { class = "^mino\\.settings$" }, float = true, center = true })
+
 -- Opacity exceptions (opaque = no blur through these)
 hl.window_rule({ name = "opaque-firefox", match = { class = "^firefox$" }, opaque = true })
 hl.window_rule({ name = "opaque-kitty", match = { class = "^kitty$" }, opaque = true })

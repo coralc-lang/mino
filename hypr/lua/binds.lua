@@ -6,12 +6,13 @@
 
 local HOME = os.getenv("HOME") or "/home/cerie"
 local SCRIPTS = HOME .. "/.config/hypr/scripts"
+local minoUI = "python3 " .. HOME .. "/.config/hypr/mino-ui/mino-ui.py"
 
 local terminal = "foot"
 local editor = "zeditor"
 local fileManager = "thunar"  -- thunar preferred; nautilus fallback via shell
 local browser = "firefox"
-local menu = "/home/cerie/.config/hypr/scripts/app-grid.py"
+local menu = minoUI .. " launcher"
 
 -- Apps
 hl.bind("SUPER + Return", hl.dsp.exec_cmd(terminal))
@@ -69,8 +70,8 @@ hl.bind("SUPER + N", hl.dsp.exec_cmd(SCRIPTS .. "/toggle-waybar.sh"))
 hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("/home/cerie/.config/hypr/scripts/brightness-slider.sh"))
 hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd(SCRIPTS .. "/wallpaper-picker.sh"))
-hl.bind("SUPER + SHIFT + comma", hl.dsp.exec_cmd(SCRIPTS .. "/settings.sh"))
-hl.bind("SUPER + I", hl.dsp.exec_cmd(SCRIPTS .. "/settings.sh"))
+hl.bind("SUPER + SHIFT + comma", hl.dsp.exec_cmd(minoUI .. " settings"))
+hl.bind("SUPER + I", hl.dsp.exec_cmd(minoUI .. " settings"))
 
 -- Session
 hl.bind("SUPER + SHIFT + Escape", hl.dsp.exec_cmd("hyprctl dispatch exit"))

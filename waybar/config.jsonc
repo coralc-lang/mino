@@ -1,11 +1,11 @@
 {
   "layer": "top",
   "position": "right",
-  "width": 56,
+  "width": 44,
   "height": "100%",
   "margin": "6px 6px 6px 0",
-  "padding": "10px 4px",
-  "spacing": 6,
+  "padding": "8px 2px",
+  "spacing": 4,
   "reload_style_on_change": true,
   "modules-left": [
     "custom/launcher",
@@ -29,7 +29,7 @@
     "format": "󰣃",
     "tooltip": true,
     "tooltip-format": "mino utilities",
-    "on-click": "/home/cerie/.config/hypr/scripts/mino-menu.sh",
+    "on-click": "python3 /home/cerie/.config/hypr/mino-ui/mino-ui.py launcher",
     "on-click-right": "rofi -show drun -theme mino"
   },
   "custom/workspace": {
@@ -43,7 +43,6 @@
   },
   "clock": {
     "format": "{:%H%n%M}",
-    "format-alt": "{:%Y-%m-%d %H:%M:%S}",
     "tooltip-format": "{:%A\n%B %d, %Y}\n\n{calendar}",
     "interval": 30,
     "on-click": "",
@@ -151,7 +150,7 @@
     "format": "󰒓",
     "tooltip": true,
     "tooltip-format": "Settings",
-    "on-click": "/home/cerie/.config/hypr/scripts/settings.sh"
+    "on-click": "python3 /home/cerie/.config/hypr/mino-ui/mino-ui.py settings"
   },
   "custom/session": {
     "format": "⏻",
