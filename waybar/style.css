@@ -1,4 +1,4 @@
-/* mino waybar — designed side panel */
+/* mino waybar - designed side panel */
 @import url("file:///home/cerie/.config/hypr/generated/waybar.css");
 
 * {
@@ -16,41 +16,20 @@ window#waybar {
   border-right: none;
 }
 
-/* module base */
-#custom/launcher,
-#custom/workspace,
-#clock,
-#cpu,
-#memory,
-#pulseaudio,
-#backlight,
-#network,
-#battery,
-#custom/notifications,
-#custom/settings,
-#custom/session {
-  padding: 10px 6px;
-  margin: 2px 6px;
-  background-color: transparent;
-  color: @on-surface;
-  border-radius: 0;
-  min-height: 30px;
-}
-
-/* identity block */
-#custom/launcher {
+#custom\:launcher {
   color: @accent;
   font-size: 20px;
   padding-top: 16px;
   padding-bottom: 8px;
   margin-bottom: 4px;
   border-bottom: 1px solid alpha(@border-dim, 0.8);
+  min-height: 30px;
 }
-#custom/launcher:hover {
+#custom\:launcher:hover {
   background-color: alpha(@accent, 0.10);
 }
 
-#custom/workspace {
+#custom\:workspace {
   background-color: alpha(@accent, 0.16);
   border: 1px solid alpha(@accent, 0.45);
   color: @accent;
@@ -58,13 +37,12 @@ window#waybar {
   font-size: 18px;
   padding: 10px 4px;
   margin: 6px 8px 10px 8px;
-  text-align: center;
+  min-height: 34px;
 }
-#custom/workspace:hover {
+#custom\:workspace:hover {
   background-color: alpha(@accent, 0.24);
 }
 
-/* ── clock ── */
 #clock {
   color: @fg;
   font-weight: 700;
@@ -73,19 +51,20 @@ window#waybar {
   margin-top: 6px;
   margin-bottom: 8px;
   border-bottom: 1px solid alpha(@border-dim, 0.6);
+  min-height: 40px;
 }
 #clock:hover {
   background-color: alpha(@accent, 0.12);
   color: @accent;
 }
 
-/* perf row */
 #cpu,
 #memory {
   background-color: alpha(@surface, 0.55);
   border-left: 2px solid alpha(@accent, 0.45);
   padding: 8px 6px;
   margin: 1px 8px;
+  min-height: 28px;
 }
 #cpu:hover,
 #memory:hover {
@@ -93,7 +72,6 @@ window#waybar {
   border-left-color: @accent;
 }
 
-/* control group */
 #pulseaudio,
 #backlight,
 #network,
@@ -101,6 +79,7 @@ window#waybar {
   background-color: alpha(@surface, 0.4);
   padding: 9px 6px;
   margin: 2px 6px;
+  min-height: 30px;
 }
 #pulseaudio:hover,
 #backlight:hover,
@@ -118,28 +97,29 @@ window#waybar {
   animation: blink 1s linear infinite;
 }
 
-/* bottom actions */
-#custom/notifications,
-#custom/settings {
+#custom\:notifications,
+#custom\:settings {
   color: @on-surface-variant;
   font-size: 16px;
   margin-top: 4px;
+  min-height: 30px;
 }
-#custom/notifications:hover,
-#custom/settings:hover {
+#custom\:notifications:hover,
+#custom\:settings:hover {
   background-color: alpha(@accent, 0.14);
   color: @accent;
 }
 
-#custom/session {
+#custom\:session {
   color: @accent;
   font-size: 18px;
   border-top: 1px solid alpha(@border-dim, 0.8);
   padding-top: 12px;
   padding-bottom: 16px;
   margin-top: 8px;
+  min-height: 30px;
 }
-#custom/session:hover {
+#custom\:session:hover {
   background-color: alpha(@accent, 0.18);
   color: @fg;
 }
