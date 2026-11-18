@@ -143,10 +143,6 @@ css = b"""
 """
 prov = Gtk.CssProvider()
 prov.load_from_data(css)
-Gtk.StyleContext.add_provider_for_screen(
-    Gdk = None  # placeholder
-) if False else None
-
 from gi.repository import Gdk
 Gtk.StyleContext.add_provider_for_screen(
     Gdk.Screen.get_default(),
