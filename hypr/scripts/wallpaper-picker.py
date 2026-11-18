@@ -118,7 +118,7 @@ def make_thumb(path: str) -> str:
 class Picker(Gtk.Window):
     def __init__(self):
         super().__init__(title="Wallpapers")
-        self.set_default_size(780, 480)
+        self.set_default_size(640, 380)
         self.set_border_width(12)
         self.get_style_context().add_class("mino-pick")
 
