@@ -37,7 +37,7 @@ window#waybar {
   min-height: 30px;
 }
 
-/* ── identity: launcher + workspace ── */
+/* identity block */
 #custom/launcher {
   color: @accent;
   font-size: 20px;
@@ -79,7 +79,7 @@ window#waybar {
   color: @accent;
 }
 
-/* ── perf row ── */
+/* perf row */
 #cpu,
 #memory {
   background-color: alpha(@surface, 0.55);
@@ -93,7 +93,7 @@ window#waybar {
   border-left-color: @accent;
 }
 
-/* ── control group ── */
+/* control group */
 #pulseaudio,
 #backlight,
 #network,
@@ -118,7 +118,7 @@ window#waybar {
   animation: blink 1s linear infinite;
 }
 
-/* ── bottom actions ── */
+/* bottom actions */
 #custom/notifications,
 #custom/settings {
   color: @on-surface-variant;

@@ -23,9 +23,9 @@ cur="$(nmcli -t -f ACTIVE,SSID dev wifi 2>/dev/null | awk -F: '$1=="yes"{print $
 
 items=()
 if [[ "$wifi_on" == "enabled" ]]; then
-  items+=("Wi-Fi: ON — turn off")
+  items+=("Wi-Fi: ON - turn off")
 else
-  items+=("Wi-Fi: OFF — turn on")
+  items+=("Wi-Fi: OFF - turn on")
 fi
 [[ -n "$cur" ]] && items+=("Disconnect from ${cur}")
 
@@ -40,7 +40,7 @@ while IFS=: read -r active ssid sec sig; do
   items+=("${ssid}${mark} | ${sig}%${secmark}")
 done < <(nmcli -t -f ACTIVE,SSID,SECURITY,SIGNAL dev wifi 2>/dev/null | sort -t: -k4 -nr)
 
-items+=("— Refresh scan —")
+items+=("- Refresh scan -")
 items+=("Open nmtui (TUI)")
 items+=("Connection settings (nm-connection-editor)")
 
@@ -51,7 +51,7 @@ case "$choice" in
   "Wi-Fi: ON"*) nmcli radio wifi off; notify-send -t 1500 "network" "Wi-Fi off" ;;
   "Wi-Fi: OFF"*) nmcli radio wifi on; sleep 0.4; notify-send -t 1500 "network" "Wi-Fi on" ;;
   "Disconnect from"*) nmcli con down id "$cur" 2>/dev/null || nmcli dev disconnect wlan0; notify-send -t 1500 "network" "Disconnected" ;;
-  "— Refresh scan —") nmcli dev wifi rescan 2>/dev/null || true; notify-send -t 1200 "network" "Rescanning…" ;;
+  "- Refresh scan -") nmcli dev wifi rescan 2>/dev/null || true; notify-send -t 1200 "network" "Rescanning…" ;;
   "Open nmtui"*) foot -e nmtui >/dev/null 2>&1 & ;;
   "Connection settings"*) nm-connection-editor >/dev/null 2>&1 & ;;
   *|*)

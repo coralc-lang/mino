@@ -41,13 +41,13 @@ choice="$(printf '%s\n' \
   "▸ Network & Bluetooth" \
   "▸ System utilities" \
   "▸ Keybinds & favorites" \
-  "────────────" \
+  "────────" \
   "Animations: $(onoff "$anim")" \
   "Idle/lock: $(onoff "$idle")" \
   "Window transparency: $(onoff "$trans")" \
   "Sidebar expanded: $(onoff "$expanded")" \
   "Cursor size: ${cursor}px" \
-  "────────────" \
+  "────────" \
   "Cycle theme" \
   "Wallpaper picker" \
   "Reload config" \
