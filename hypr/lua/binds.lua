@@ -11,7 +11,7 @@ local terminal = "foot"
 local editor = "zeditor"
 local fileManager = "thunar"  -- thunar preferred; nautilus fallback via shell
 local browser = "firefox"
-local menu = "rofi -show drun -theme mino"
+local menu = "/home/cerie/.config/hypr/scripts/app-grid.sh"
 
 -- Apps
 hl.bind("SUPER + Return", hl.dsp.exec_cmd(terminal))

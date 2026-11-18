@@ -63,7 +63,7 @@ case "$choice" in
       rofi -show drun -theme mino -filter "$app"
     fi
     ;;
-  "All applications"*) rofi -show drun -theme mino ;;
+  "All applications"*) exec /home/cerie/.config/hypr/scripts/app-grid.sh ;;
   Settings) exec "$SCRIPTS/settings.sh" ;;
   "Wallpaper picker") exec "$SCRIPTS/wallpaper-picker.sh" ;;
   "Theme cycle") exec "$SCRIPTS/theme-cycle.sh" ;;
