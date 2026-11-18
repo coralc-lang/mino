@@ -48,8 +48,9 @@ class SliderWin(Gtk.Window):
         super().__init__(title=("Volume" if kind == "volume" else "Brightness"))
         self.set_decorated(False)
         self.set_keep_above(True)
-        self.set_border_width(18)
-        self.set_default_size(340, 120)
+        self.set_resizable(False)
+        self.set_border_width(10)
+        self.set_default_size(280, 92)
         self.get_style_context().add_class("mino-slider")
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
