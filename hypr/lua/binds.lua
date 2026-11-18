@@ -11,7 +11,7 @@ local terminal = "foot"
 local editor = "zeditor"
 local fileManager = "thunar"  -- thunar preferred; nautilus fallback via shell
 local browser = "firefox"
-local menu = "/home/cerie/.config/hypr/scripts/app-grid.sh"
+local menu = "/home/cerie/.config/hypr/scripts/app-grid.py"
 
 -- Apps
 hl.bind("SUPER + Return", hl.dsp.exec_cmd(terminal))
@@ -22,7 +22,7 @@ hl.bind("SUPER + G", hl.dsp.exec_cmd("godot"))
 hl.bind("SUPER + R", hl.dsp.exec_cmd(menu))
 hl.bind("SUPER + A", hl.dsp.exec_cmd("/home/cerie/.config/hypr/scripts/mino-menu.sh"))
 hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd(terminal .. " -e btop"))
-hl.bind("SUPER + ALT + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
+hl.bind("SUPER + ALT + SHIFT + R", hl.dsp.exec_cmd("/home/cerie/.config/hypr/scripts/hypr-restart.sh"))
 hl.bind("SUPER + P", hl.dsp.exec_cmd("hyprpicker -a -n"))
 
 -- Window management
