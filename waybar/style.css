@@ -1,4 +1,4 @@
-/* mino waybar — grouped side panel (not a flat list) */
+/* mino waybar — designed side panel */
 @import url("file:///home/cerie/.config/hypr/generated/waybar.css");
 
 * {
@@ -16,9 +16,9 @@ window#waybar {
   border-right: none;
 }
 
-/* shared module base */
-#custom-launcher,
-#custom-workspace,
+/* module base */
+#custom/launcher,
+#custom/workspace,
 #clock,
 #cpu,
 #memory,
@@ -26,9 +26,9 @@ window#waybar {
 #backlight,
 #network,
 #battery,
-#custom-notifications,
-#custom-settings,
-#custom-session {
+#custom/notifications,
+#custom/settings,
+#custom/session {
   padding: 10px 6px;
   margin: 2px 6px;
   background-color: transparent;
@@ -37,8 +37,8 @@ window#waybar {
   min-height: 30px;
 }
 
-/* ── identity block ── */
-#custom-launcher {
+/* ── identity: launcher + workspace ── */
+#custom/launcher {
   color: @accent;
   font-size: 20px;
   padding-top: 16px;
@@ -46,18 +46,25 @@ window#waybar {
   margin-bottom: 4px;
   border-bottom: 1px solid alpha(@border-dim, 0.8);
 }
+#custom/launcher:hover {
+  background-color: alpha(@accent, 0.10);
+}
 
-#custom-workspace {
+#custom/workspace {
+  background-color: alpha(@accent, 0.16);
+  border: 1px solid alpha(@accent, 0.45);
   color: @accent;
   font-weight: 700;
   font-size: 18px;
-  background-color: alpha(@accent, 0.16);
-  border: 1px solid alpha(@accent, 0.35);
   padding: 10px 4px;
   margin: 6px 8px 10px 8px;
+  text-align: center;
+}
+#custom/workspace:hover {
+  background-color: alpha(@accent, 0.24);
 }
 
-/* ── time (vertical) ── */
+/* ── clock ── */
 #clock {
   color: @fg;
   font-weight: 700;
@@ -67,49 +74,39 @@ window#waybar {
   margin-bottom: 8px;
   border-bottom: 1px solid alpha(@border-dim, 0.6);
 }
-
 #clock:hover {
   background-color: alpha(@accent, 0.12);
   color: @accent;
 }
 
-/* ── perf group ── */
+/* ── perf row ── */
 #cpu,
 #memory {
-  color: @on-surface-variant;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 6px;
-  margin: 1px 8px;
   background-color: alpha(@surface, 0.55);
   border-left: 2px solid alpha(@accent, 0.45);
+  padding: 8px 6px;
+  margin: 1px 8px;
 }
-
 #cpu:hover,
 #memory:hover {
   background-color: alpha(@accent, 0.14);
-  color: @accent;
   border-left-color: @accent;
 }
 
-/* ── controls group (volume/brightness/net/bat) ── */
+/* ── control group ── */
 #pulseaudio,
 #backlight,
 #network,
 #battery {
-  color: @on-surface;
-  font-size: 13px;
+  background-color: alpha(@surface, 0.4);
   padding: 9px 6px;
   margin: 2px 6px;
-  background-color: alpha(@surface, 0.4);
 }
-
 #pulseaudio:hover,
 #backlight:hover,
 #network:hover,
 #battery:hover {
   background-color: alpha(@accent, 0.14);
-  color: @accent;
 }
 
 #pulseaudio.muted { color: @error; }
@@ -122,27 +119,27 @@ window#waybar {
 }
 
 /* ── bottom actions ── */
-#custom-notifications,
-#custom-settings {
+#custom/notifications,
+#custom/settings {
   color: @on-surface-variant;
   font-size: 16px;
   margin-top: 4px;
 }
-#custom-notifications:hover,
-#custom-settings:hover {
+#custom/notifications:hover,
+#custom/settings:hover {
   background-color: alpha(@accent, 0.14);
   color: @accent;
 }
 
-#custom-session {
+#custom/session {
   color: @accent;
   font-size: 18px;
-  padding-bottom: 16px;
-  margin-top: 8px;
   border-top: 1px solid alpha(@border-dim, 0.8);
   padding-top: 12px;
+  padding-bottom: 16px;
+  margin-top: 8px;
 }
-#custom-session:hover {
+#custom/session:hover {
   background-color: alpha(@accent, 0.18);
   color: @fg;
 }

@@ -111,7 +111,7 @@ cfg = {
     "format": os.environ["MEM"],
     "interval": 3,
     "tooltip": True,
-    "tooltip-format": "RAM {percentage}% — {used} / {total}",
+    "tooltip-format": "RAM {percentage}% - {used} / {total}",
   },
   "pulseaudio": {
     "format": os.environ["VOL"],
@@ -124,7 +124,7 @@ cfg = {
     "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+",
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
     "tooltip": True,
-    "tooltip-format": "{volume}% · click for slider · scroll adjusts",
+    "tooltip-format": "{volume}% | click for slider | scroll adjusts",
   },
   "backlight": {
     "format": os.environ["BR"],
@@ -141,7 +141,7 @@ cfg = {
     "format-disconnected": os.environ["NET_DISC"],
     "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}\nclick to manage",
     "tooltip-format-ethernet": "{ifname}\n{ipaddr}/{cidr}",
-    "tooltip-format-disconnected": "disconnected · click to connect",
+    "tooltip-format-disconnected": "disconnected | click to connect",
     "on-click": f"{scripts}/network-menu.sh",
     "on-click-right": "nm-connection-editor || nmtui",
     "max-length": 20,
@@ -154,7 +154,7 @@ cfg = {
     "format-plugged": "󰚥",
     "format-full": "󰁹",
     "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
-    "tooltip-format": "{capacity}% — {timeTo}",
+    "tooltip-format": "{capacity}% - {timeTo}",
     "on-click": "",
   },
   "custom/notifications": {
