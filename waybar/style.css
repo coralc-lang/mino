@@ -1,140 +1,37 @@
-/* mino waybar - designed side panel */
+/* mino waybar - side panel */
 @import url("file:///home/cerie/.config/hypr/generated/waybar.css");
 
-* {
-  border: none;
-  border-radius: 0;
-  font-family: "JetBrains Mono Nerd Font", "JetBrainsMono Nerd Font", sans-serif;
-  font-size: 13px;
-  min-height: 0;
-}
+* { border: none; border-radius: 0; font-family: "JetBrains Mono Nerd Font", "JetBrainsMono Nerd Font", sans-serif; font-size: 13px; min-height: 0; }
 
-window#waybar {
-  background-color: alpha(@bg, 0.97);
-  color: @fg;
-  border: 1px solid @border-dim;
-  border-right: none;
-}
+window#waybar { background-color: alpha(@bg, 0.97); color: @fg; border: 1px solid @border-dim; border-right: none; }
 
-#custom\:launcher {
-  color: @accent;
-  font-size: 20px;
-  padding-top: 16px;
-  padding-bottom: 8px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid alpha(@border-dim, 0.8);
-  min-height: 30px;
-}
-#custom\:launcher:hover {
-  background-color: alpha(@accent, 0.10);
-}
+#custom\:launcher { color: @accent; font-size: 20px; padding-top: 16px; padding-bottom: 8px; margin-bottom: 4px; border-bottom: 1px solid alpha(@border-dim, 0.8); min-height: 30px; background-color: transparent; }
+#custom\:launcher:hover { background-color: alpha(@accent, 0.10); }
 
-#custom\:workspace {
-  background-color: alpha(@accent, 0.16);
-  border: 1px solid alpha(@accent, 0.45);
-  color: @accent;
-  font-weight: 700;
-  font-size: 18px;
-  padding: 10px 4px;
-  margin: 6px 8px 10px 8px;
-  min-height: 34px;
-}
-#custom\:workspace:hover {
-  background-color: alpha(@accent, 0.24);
-}
+#custom\:workspace { background-color: alpha(@accent, 0.16); border: 1px solid alpha(@accent, 0.45); color: @accent; font-weight: 700; font-size: 18px; padding: 10px 4px; margin: 6px 8px 10px 8px; min-height: 34px; background-color: alpha(@accent, 0.16); }
+#custom\:workspace:hover { background-color: alpha(@accent, 0.24); }
 
-#clock {
-  color: @fg;
-  font-weight: 700;
-  font-size: 15px;
-  padding: 14px 4px;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid alpha(@border-dim, 0.6);
-  min-height: 40px;
-}
-#clock:hover {
-  background-color: alpha(@accent, 0.12);
-  color: @accent;
-}
+#clock { color: @fg; font-weight: 700; font-size: 15px; padding: 14px 4px; margin-top: 6px; margin-bottom: 8px; border-bottom: 1px solid alpha(@border-dim, 0.6); min-height: 40px; background-color: transparent; }
+#clock:hover { background-color: alpha(@accent, 0.12); color: @accent; }
 
-#cpu,
-#memory {
-  background-color: alpha(@surface, 0.55);
-  border-left: 2px solid alpha(@accent, 0.45);
-  padding: 8px 6px;
-  margin: 1px 8px;
-  min-height: 28px;
-}
-#cpu:hover,
-#memory:hover {
-  background-color: alpha(@accent, 0.14);
-  border-left-color: @accent;
-}
+#cpu, #memory { background-color: alpha(@surface, 0.55); border-left: 2px solid alpha(@accent, 0.45); padding: 8px 6px; margin: 1px 8px; min-height: 28px; background-color: alpha(@surface, 0.55); }
+#cpu:hover, #memory:hover { background-color: alpha(@accent, 0.14); border-left-color: @accent; }
 
-#pulseaudio,
-#backlight,
-#network,
-#battery {
-  background-color: alpha(@surface, 0.4);
-  padding: 9px 6px;
-  margin: 2px 6px;
-  min-height: 30px;
-}
-#pulseaudio:hover,
-#backlight:hover,
-#network:hover,
-#battery:hover {
-  background-color: alpha(@accent, 0.14);
-}
-
+#pulseaudio, #backlight, #network, #battery { background-color: alpha(@surface, 0.4); padding: 9px 6px; margin: 2px 6px; min-height: 30px; background-color: alpha(@surface, 0.4); }
+#pulseaudio:hover, #backlight:hover, #network:hover, #battery:hover { background-color: alpha(@accent, 0.14); }
 #pulseaudio.muted { color: @error; }
 #network.disconnected { color: @warning; }
 #battery.charging, #battery.plugged { color: @success; }
 #battery.warning:not(.charging) { color: @warning; }
-#battery.critical:not(.charging) {
-  color: @error;
-  animation: blink 1s linear infinite;
-}
+#battery.critical:not(.charging) { color: @error; animation: blink 1s linear infinite; }
 
-#custom\:notifications,
-#custom\:settings {
-  color: @on-surface-variant;
-  font-size: 16px;
-  margin-top: 4px;
-  min-height: 30px;
-}
-#custom\:notifications:hover,
-#custom\:settings:hover {
-  background-color: alpha(@accent, 0.14);
-  color: @accent;
-}
+#custom\:notifications, #custom\:settings { color: @on-surface-variant; font-size: 16px; margin-top: 4px; min-height: 30px; background-color: transparent; }
+#custom\:notifications:hover, #custom\:settings:hover { background-color: alpha(@accent, 0.14); color: @accent; }
 
-#custom\:session {
-  color: @accent;
-  font-size: 18px;
-  border-top: 1px solid alpha(@border-dim, 0.8);
-  padding-top: 12px;
-  padding-bottom: 16px;
-  margin-top: 8px;
-  min-height: 30px;
-}
-#custom\:session:hover {
-  background-color: alpha(@accent, 0.18);
-  color: @fg;
-}
+#custom\:session { color: @accent; font-size: 18px; border-top: 1px solid alpha(@border-dim, 0.8); padding-top: 12px; padding-bottom: 16px; margin-top: 8px; min-height: 30px; background-color: transparent; }
+#custom\:session:hover { background-color: alpha(@accent, 0.18); color: @fg; }
 
-tooltip {
-  background-color: @surface-hi;
-  color: @fg;
-  border: 1px solid @accent;
-  border-radius: 0;
-  padding: 8px;
-}
-tooltip label {
-  color: @fg;
-  font-family: "JetBrains Mono Nerd Font";
-  font-size: 12px;
-}
+tooltip { background-color: @surface-hi; color: @fg; border: 1px solid @accent; border-radius: 0; padding: 8px; }
+tooltip label { color: @fg; font-family: "JetBrains Mono Nerd Font"; font-size: 12px; }
 
 @keyframes blink { to { opacity: 0.55; } }
